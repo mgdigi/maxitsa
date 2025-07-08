@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  php-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: php_web_app
+    volumes:
+      - .:/app
+    ports:
+      - 8085:80
+    env_file:
+    # pour developpement
+      - .env
+    networks:
+      - infra_central_net
+      #lors de la mise en production 
+    # environment:
+    #   - DB_HOST=postgres_db
+    #   - DB_NAME=gestion_auchan
+    #   - DB_USER=mgdigi
+    #   - DB_PASSWORD=Prophete10
+    #   - DB_PORT=5432
+ 
+  php-cli:
+    build:
+      context: .
+      dockerfile: Dockerfile.cli
+    container_name: php_cli_app
+    volumes:
+      - ./src:/app
+    working_dir: /app
+    environment:
+      - DB_HOST=postgres_db
+      - DB_NAME=maxitsa_db 
+      - DB_USER=mgdigi
+      - DB_PASS=Prophete10
+      - DB_PORT=5432
+    networks:
+      - infra_central_net
+    tty: true
+    stdin_open: true
+
+
+   
+
+networks:
+  infra_central_net:
+    external: true
