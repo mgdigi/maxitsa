@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - 8085:80
+      - 8083:80
     env_file:
     # pour developpement
       - .env

@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Core;
+namespace App\Core\Abstract;
+use App\Core\Session;
 abstract class AbstractController extends Session{
  
 
@@ -35,9 +36,9 @@ abstract class AbstractController extends Session{
     public function render(string $views, array $data = []){
         extract($data);
         ob_start();
-        require_once '../template/'.$views;
+        require_once '../templates/'.$views;
         $contentForLayout = ob_get_clean();
-        require_once '../template/layout/'. $this->layout . '.layout.php';
+        require_once '../templates/layout/'. $this->layout . '.layout.php';
     }
 
 }
