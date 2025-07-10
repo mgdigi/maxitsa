@@ -30,7 +30,13 @@ class SecurityService{
 
     // }
 
-    
+    public function seConnecter(string $login, string $password): ?User {
+    $user = $this->userRepository->selectByLogin($login);
+    if ($user && password_verify($password, $user->getPassword())) {
+        return $user;
+    }
+    return null;
+}
 
 
     public function creerComptePrincipal(array $userData, array $compteData): bool|string {

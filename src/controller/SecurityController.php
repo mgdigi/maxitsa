@@ -37,7 +37,34 @@ class SecurityController extends AbstractController{
 
     // public function destroy(){}
 
-   
+    public function login(){
+
+        $login = $_POST['login'];
+        $password = $_POST['password'];
+
+        $this->validator->isEmpty('email', $login);
+        $this->validator->isEmpty('password', $password);
+        $this->validator->minLength('email', $login, 4, "L'email doit contenir au moins 4 caractères");
+        $this->validator->minLength('password', $password, 4, "Le mot de passe doit contenir au moins 4 caractères");
+        $this->validator->isEmail('email', $login);
+       
+
+        $validatorForm = $this->validator->isValid();
+        if($validatorForm){
+        $user = $this->securityService->seConnecter($login, $password);  
+         if($user){
+             $this->session->set("user", $user->toArray());
+            header("Location:". $_ENV['APP_URL']. "/compte");
+            exit();
+         }else{
+            $this->validator->addError('password', "Identifiant incorrect");
+            $this->session->set('errors', $this->validator->getErrors());
+            $this->render("login/login.php");
+         }
+        }else{
+         $this->render("login/login.php");
+        }
+    }
 
     public function logout(){
         // self::destroy();
