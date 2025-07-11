@@ -68,27 +68,52 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">prénom</label>
                                     <input type="text" name="prenom" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
+                                    <?php if(!empty($_SESSION['errors']['prenom'])): ?>
+                                        <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
+                                        <p class="text-sm text-white "><?= $_SESSION['errors']['prenom']; ?> <p>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">nom</label>
                                     <input type="text" name="nom" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
+                                    <?php if(!empty($_SESSION['errors']['nom'])): ?>
+                                        <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
+                                        <p class="text-sm text-white "><?= $_SESSION['errors']['nom']; ?> <p>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">login</label>
                                 <input type="text" name="login" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
+                                <?php if(!empty($_SESSION['errors']['login'])): ?>
+                                        <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
+                                        <p class="text-sm text-white "><?= $_SESSION['errors']['login']; ?> <p>
+                                        </div>
+                                    <?php endif; ?>
                             </div>
 
                              <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">password</label>
                                 <input type="text" name="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
+                                <?php if(!empty($_SESSION['errors']['password'])): ?>
+                                        <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
+                                        <p class="text-sm text-white "><?= $_SESSION['errors']['password']; ?> <p>
+                                        </div>
+                                    <?php endif; ?>
                             </div>
 
                             
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Numéro CNI</label>
                                 <input type="text" name="numeroCNI" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
+                                <?php if(!empty($_SESSION['errors']['numeroCNI'])): ?>
+                                        <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
+                                        <p class="text-sm text-white "><?= $_SESSION['errors']['numeroCNI']; ?> <p>
+                                        </div>
+                                    <?php endif; ?>
                             </div>
                             
                             <div class="grid grid-cols-2 gap-4">
@@ -97,6 +122,11 @@
                                     <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-orange-500 transition-colors cursor-pointer">
                                         <input type="file"  accept="image/*" name="photoRecto">
                                         <p class="text-gray-500 text-sm">télécharger l'image</p>
+                                        <?php if(!empty($_SESSION['errors']['photoRecto'])): ?>
+                                        <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
+                                        <p class="text-sm text-white "><?= $_SESSION['errors']['photoRecto']; ?> <p>
+                                        </div>
+                                    <?php endif; ?>
                                     </div>
                                 </div>
                                 <div>
@@ -104,6 +134,11 @@
                                     <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-orange-500 transition-colors cursor-pointer">
                                         <input type="file" accept="image/*" name="photoVerso">
                                         <p class="text-gray-500 text-sm">télécharger l'image</p>
+                                        <?php if(!empty($_SESSION['errors']['photoVerso'])): ?>
+                                        <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
+                                        <p class="text-sm text-white "><?= $_SESSION['errors']['photoVerso']; ?> <p>
+                                        </div>
+                                    <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -111,11 +146,21 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Adresse</label>
                                 <input type="text" name="adresse" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
+                                <?php if(!empty($_SESSION['errors']['adresse'])): ?>
+                                        <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
+                                        <p class="text-sm text-white "><?= $_SESSION['errors']['adresse']; ?> <p>
+                                        </div>
+                                    <?php endif; ?>
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Telephone</label>
                                 <input type="text" name="numeros" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
+                                <?php if(!empty($_SESSION['errors']['numeros'])): ?>
+                                        <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
+                                        <p class="text-sm text-white "><?= $_SESSION['errors']['numeros']; ?> <p>
+                                        </div>
+                                    <?php endif; ?>
                             </div>
 
 
@@ -131,6 +176,9 @@
                                 Enregistrer
                             </button>
                         </form>
+                        <a href="/" class="mt-3 text-orange-500 hover:text-orange-600 transition-colors">
+                            <p class="">j'ai deja un compte</p>
+                        </a>
                     </div>
                 </div>
             </div>

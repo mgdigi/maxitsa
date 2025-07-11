@@ -12,8 +12,11 @@ use App\Core\Router;
 
 use App\Repository\UsersRepository;
 use App\Repository\CompteRepository;
+use App\Repository\TransactionRepository;
+
 use App\Service\SecurityService;
 use App\Service\CompteService;
+use App\Service\TransactionService;
 
 class App
 {
@@ -42,10 +45,12 @@ class App
             'services' => [
                 'securityServ' => SecurityService::class,
                 'compteServ' => CompteService::class,
+                'transactionServ' => TransactionService::class,
             ],
             'repositories' => [
                 'usersRepo' => UsersRepository::class,
                 'compteRepo' => CompteRepository::class,
+                'transactionRepo' => TransactionRepository::class,
             ]
         ];
 
@@ -68,6 +73,7 @@ class App
         }
 
         $dependency = self::$container[$category][$key];
+
 
         if (is_callable($dependency)) {
             self::$container[$category][$key] = $dependency();

@@ -7,7 +7,8 @@
             "App\\Repository\\": "src/repository/",
             "App\\Service\\": "src/service/",
             "App\\Controller\\": "src/controller/",
-            "App\\Core\\Abstract\\": "app/core/abstract/"
+            "App\\Core\\Abstract\\": "app/core/abstract/",
+            "App\\Core\\Middlewares\\": "app/core/middlewares/"
         }
     },
     "authors": [
@@ -17,6 +18,7 @@
         }
     ],
     "require": {
-        "vlucas/phpdotenv": "^5.6"
+        "vlucas/phpdotenv": "^5.6",
+        "twilio/sdk": "^8.6"
     }
 }

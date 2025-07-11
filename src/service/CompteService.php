@@ -8,6 +8,15 @@ class CompteService{
     private CompteRepository $compteRepository;
     private UsersRepository $userRepository;
 
+    private static CompteService|null $instance = null;
+
+    public static function getInstance():CompteService{
+        if(self::$instance == null){
+            self::$instance = new CompteService();
+        }
+        return self::$instance;
+    }
+
     public function __construct(){
         $this->compteRepository = App::getDependency('repositories', 'compteRepo');
         $this->userRepository = App::getDependency('repositories', 'usersRepo');
@@ -28,8 +37,11 @@ class CompteService{
     $compteData['id_user'] = $userId;
 
     return $this->compteRepository->insert($compteData);
-}
+    }
 
+    public function compteClient($user_id){
+        return $this->compteRepository->selectByClient($user_id);
+    }
 
 
 }

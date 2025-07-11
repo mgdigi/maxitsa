@@ -21,17 +21,7 @@ class CompteRepository extends AbstractRepository{
     }
 
      public function selectAll(){}
-    //  public function insert($data){
-    //     $sql = "INSERT INTO $this->table (numero,typeCompte, solde, user_id) values (:numero, :solde, :user_id)";
-    //     $stmt = $this->pdo->prepare($sql);
-    //     $result = $stmt->execute($data);
-
-    //     if($result){
-    //         return $this->pdo->lastInsertId();
-    //     }else{
-    //         return false;
-    //     }
-    //  }
+   
 
      public function insert(array $data): bool {
     $query = "INSERT INTO compte (numero, typeCompte, solde, dateCreation, id_user) 
@@ -53,7 +43,7 @@ public function findPrincipalByUserId($userId): ?array {
      public function selectById(){}
 
      public function selectByClient($user_id){
-        $sql = "SELECT * from $this->table where user_id = :user_id";
+        $sql = "SELECT * from $this->table where id_user = :user_id";
         $stmt = $this->pdo->prepare($sql);
         $result = $stmt->execute(['user_id' => $user_id]);
         if($result){

@@ -11,13 +11,13 @@ $routes = [
     ],
     '/comptePrincipal' => [
         'controller' => CompteController::class, 
-        'method' => 'create'
-        // 'middlewares' => ['isLoggedIn', 'isClient'] 
+        'method' => 'create',
     ],
     '/compte' => [
         'controller' => CompteController::class,
-        'method' => 'index'
-        // 'middlewares' => ['isLoggedIn', 'isClient']
+        'method' => 'index',
+        'middlewares' => ['auth']
+
     ],
     "/login" => [
         'controller' => SecurityController::class, 

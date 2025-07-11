@@ -11,14 +11,14 @@
                     
                     <div class="flex items-center space-x-6">
                         <div class="bg-gray-light text-black px-4 py-2 rounded-lg font-bold text-sm">
-                            CN0034561
+                            <?= $compte['numero'] ?>
                         </div>
                         
                             <img src="./assets/icons/notif.svg" alt="user" class="w-7 h-7">
                        
                         <div class="flex items-center">
                             <div class="w-16 h-16 bg-gray-light rounded-full flex items-center justify-center mr-3">
-                                <div class="w-8 h-8 bg-green-500 rounded-full"></div>
+                                <div class="w-8 h-8 bg-orange-500 rounded-full"></div>
                             </div>
                             <div>
                                 <div class="font-bold text-gray-800">Mohamed GUEYE</div>

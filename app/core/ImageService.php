@@ -27,19 +27,17 @@ class ImageService{
         $imageExtension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
         
         $uniqueImageName = uniqid() . '.' . $imageExtension;
-$targetDirectory = __DIR__ . '/../../public/images/uploads/'; // ✅ chemin absolu
+$targetDirectory = __DIR__ . '/../../public/images/uploads/'; 
 $imagePath = $targetDirectory . $uniqueImageName;
 
 $imageUrl = $_ENV['APP_URL'] . '/public/images/uploads/' . $uniqueImageName;
 
-// Crée le dossier s’il n'existe pas
 if (!is_dir($targetDirectory)) {
     if (!mkdir($targetDirectory, 0755, true)) {
         throw new \Exception("Impossible de créer le dossier : $targetDirectory");
     }
 }
 
-// Déplace l’image
 if (move_uploaded_file($imageTmpName, $imagePath)) {
     return [
         'url' => $imageUrl,

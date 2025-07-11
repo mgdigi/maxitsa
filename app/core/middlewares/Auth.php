@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\middlewares;
+namespace App\Core\Middlewares;
 
 class Auth{
     public function __invoke(){

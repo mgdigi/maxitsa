@@ -18,11 +18,11 @@ class SecurityController extends AbstractController{
     public function __construct(){
         parent::__construct();
         $this->layout = 'security';
-        $this->securityService = App::getDependency('services', 'securityServ');
+        $this->securityService = App::getDependency('services', key: 'securityServ');
         $this->validator = App::getDependency('core','validator');
     }
     public function index(){
-        // $errors = $this->validator->getErrors();
+        $this->unset('errors');
         $this->render("login/login.php");
     }
     public function show(){}
@@ -39,19 +39,30 @@ class SecurityController extends AbstractController{
 
     public function login(){
 
-        $login = $_POST['login'];
-        $password = $_POST['password'];
+        
 
-        $this->validator->isEmpty('email', $login);
-        $this->validator->isEmpty('password', $password);
-        $this->validator->minLength('email', $login, 4, "L'email doit contenir au moins 4 caractères");
-        $this->validator->minLength('password', $password, 4, "Le mot de passe doit contenir au moins 4 caractères");
-        $this->validator->isEmail('email', $login);
-       
+        $loginData = [
+            'email' => $_POST['login'] ?? '',
+            'password' => $_POST['password'] ?? ''
+        ];
+      
 
-        $validatorForm = $this->validator->isValid();
-        if($validatorForm){
-        $user = $this->securityService->seConnecter($login, $password);  
+        $rules = [
+            'email' => [
+                'required',
+                ['minLength', 4, "L'email doit contenir au moins 4 caractères"],
+                'isMail'
+            ],
+            'password' => [
+                'required',
+                ['minLength', 4, "Le mot de passe doit contenir au moins 5 caractères"]
+            ]
+        ];
+
+        
+
+        if($this->validator->validate($loginData, $rules)){
+        $user = $this->securityService->seConnecter($loginData['email'], $loginData['password']);  
          if($user){
              $this->session->set("user", $user->toArray());
             header("Location:". $_ENV['APP_URL']. "/compte");
@@ -62,12 +73,13 @@ class SecurityController extends AbstractController{
             $this->render("login/login.php");
          }
         }else{
-         $this->render("login/login.php");
+            $this->session->set('errors', $this->validator->getErrors());
+            $this->render("login/login.php");
         }
     }
 
     public function logout(){
-        // self::destroy();
+        session_destroy();
         header("Location:". $_ENV['APP_URL']);
     }
     

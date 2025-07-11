@@ -1,11 +1,11 @@
-
-  
-                <div class="grid grid-cols-5 gap-16 mb-8">
+  <div class="grid grid-cols-5 gap-16 mb-8">
                     <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
                     <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
                     <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
                     <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
                 </div>
+
+                <?php foreach($comptes as $compte): ?>
                 
                 <div class="flex  justify-beetween gap-6 mb-8">
                     <div class="bg-[#F4F4F4] w-[50%] rounded-xl p-6 border-2 shadow-sm">
@@ -15,7 +15,7 @@
                                    <img src="./assets/icons/solde.svg" alt="solde icon"  class="h-15 w-15">                                
                                 </div>
                                 <div>
-                                    <div class="text-3xl font-bold text-gray-800">0 CFA</div>
+                                    <div class="text-3xl font-bold text-gray-800"><?=  $compte['solde']  ?> CFA</div>
                                     <div class="text-gray-600 font-medium">Solde de mon Compte principal</div>
                                 </div>
                             </div>
@@ -42,6 +42,8 @@
                    </div>
                     
                 </div>
+
+                <?php endforeach; ?>
                 
                 <div class="bg-white rounded-xl p-6 border border-orange-200 shadow-sm">
                     <div class="flex justify-between items-center mb-6">
@@ -50,118 +52,21 @@
                     </div>
                     
                     <div class="grid grid-cols-5 gap-4">
+                        <?php foreach($transactions as $transaction): ?>
                         <div class="bg-gray-100 rounded-xl p-4 text-center">
-                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                                </svg>
+                            <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center mx-auto mb-3">
+                                <img src="./images/design/transfert.png" alt="arrow-up" class="w-8 h-8">
                             </div>
-                            <div class="font-medium text-sm text-gray-800 mb-1">Paiement Woyofal</div>
-                            <div class="text-orange-maxit font-bold text-sm">12000 CFA</div>
-                            <div class="text-xs text-gray-500 mt-1">8 juillet 2025</div>
+                            <div class="font-medium text-sm text-gray-800 mb-1"><?= $transaction['typetransaction'] ?></div>
+                            <div class="text-orange-maxit font-bold text-sm"><?= $transaction['montant'] ?> CFA</div>
+                            <div class="text-xs text-gray-500 mt-1"><?= $transaction['datetransaction'] ?></div>
                         </div>
                         
-                        <div class="bg-gray-100 rounded-xl p-4 text-center">
-                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                                </svg>
-                            </div>
-                            <div class="font-medium text-sm text-gray-800 mb-1">Retrait</div>
-                            <div class="text-orange-maxit font-bold text-sm">12000 CFA</div>
-                            <div class="text-xs text-gray-500 mt-1">8 juillet 2025</div>
-                        </div>
                         
-                        <div class="bg-gray-100 rounded-xl p-4 text-center">
-                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                                </svg>
-                            </div>
-                            <div class="font-medium text-sm text-gray-800 mb-1">Paiement fixe</div>
-                            <div class="text-orange-maxit font-bold text-sm">12000 CFA</div>
-                            <div class="text-xs text-gray-500 mt-1">8 juillet 2025</div>
-                        </div>
-                        
-                        <div class="bg-gray-100 rounded-xl p-4 text-center">
-                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                                </svg>
-                            </div>
-                            <div class="font-medium text-sm text-gray-800 mb-1">achat illimix</div>
-                            <div class="text-orange-maxit font-bold text-sm">12000 CFA</div>
-                            <div class="text-xs text-gray-500 mt-1">8 juillet 2025</div>
-                        </div>
-                        
-                        <div class="bg-gray-100 rounded-xl p-4 text-center">
-                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                                </svg>
-                            </div>
-                            <div class="font-medium text-sm text-gray-800 mb-1">Paiement</div>
-                            <div class="text-orange-maxit font-bold text-sm">12000 CFA</div>
-                            <div class="text-xs text-gray-500 mt-1">8 juillet 2025</div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                     
-                    <div class="grid grid-cols-5 gap-4 mt-4">
-                        <div class="bg-gray-100 rounded-xl p-4 text-center">
-                            <div class="w-8 h-8 bg-orange-maxit rounded-full flex items-center justify-center mx-auto mb-3">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                                </svg>
-                            </div>
-                            <div class="font-medium text-sm text-gray-800 mb-1">Depot Orange M</div>
-                            <div class="text-orange-maxit font-bold text-sm">12000 CFA</div>
-                            <div class="text-xs text-gray-500 mt-1">8 juillet 2025</div>
-                        </div>
-                        
-                        <div class="bg-gray-100 rounded-xl p-4 text-center">
-                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                                </svg>
-                            </div>
-                            <div class="font-medium text-sm text-gray-800 mb-1">Paiement</div>
-                            <div class="text-orange-maxit font-bold text-sm">12000 CFA</div>
-                            <div class="text-xs text-gray-500 mt-1">8 juillet 2025</div>
-                        </div>
-                        
-                        <div class="bg-gray-100 rounded-xl p-4 text-center">
-                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                                </svg>
-                            </div>
-                            <div class="font-medium text-sm text-gray-800 mb-1">Paiement</div>
-                            <div class="text-orange-maxit font-bold text-sm">12000 CFA</div>
-                            <div class="text-xs text-gray-500 mt-1">8 juillet 2025</div>
-                        </div>
-                        
-                        <div class="bg-gray-100 rounded-xl p-4 text-center">
-                            <div class="w-8 h-8 bg-orange-maxit rounded-full flex items-center justify-center mx-auto mb-3">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                                </svg>
-                            </div>
-                            <div class="font-medium text-sm text-gray-800 mb-1">Depot</div>
-                            <div class="text-orange-maxit font-bold text-sm">12000 CFA</div>
-                            <div class="text-xs text-gray-500 mt-1">8 juillet 2025</div>
-                        </div>
-                        
-                        <div class="bg-gray-100 rounded-xl p-4 text-center">
-                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                                </svg>
-                            </div>
-                            <div class="font-medium text-sm text-gray-800 mb-1">Paiement sen eau</div>
-                            <div class="text-orange-maxit font-bold text-sm">12000 CFA</div>
-                            <div class="text-xs text-gray-500 mt-1">8 juillet 2025</div>
-                        </div>
-                    </div>
+                    
                 </div>
             </main>
         </div>

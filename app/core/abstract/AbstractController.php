@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Core\Abstract;
+use App\Core\App;
 use App\Core\Session;
+
 abstract class AbstractController extends Session{
  
 
@@ -19,7 +21,7 @@ abstract class AbstractController extends Session{
     }
 
     public function __construct(){
-        $this->session = Session::getInstance();
+        $this->session = App::getDependency('core', 'session');
     }
 
 

@@ -25,11 +25,6 @@ class SecurityService{
         $this->compteRepository = App::getDependency('repositories', 'compteRepo');
     }
 
-    // public function seConnecter($login, $password):User|null{
-    //     return $this->userRepository->selectByLoginAndPassword($login, $password);
-
-    // }
-
     public function seConnecter(string $login, string $password): ?User {
     $user = $this->userRepository->selectByLogin($login);
     if ($user && password_verify($password, $user->getPassword())) {
@@ -39,22 +34,22 @@ class SecurityService{
 }
 
 
-    public function creerComptePrincipal(array $userData, array $compteData): bool|string {
-    $existing = $this->compteRepository->findPrincipalByUserId($userData['id_user'] ?? 0);
-    if ($existing) return "Un compte principal existe déjà pour cet utilisateur.";
+//     public function creerComptePrincipal(array $userData, array $compteData): bool|string {
+//     $existing = $this->compteRepository->findPrincipalByUserId($userData['id_user'] ?? 0);
+//     if ($existing) return "Un compte principal existe déjà pour cet utilisateur.";
 
-    $userId = $this->userRepository->insert($userData);
+//     $userId = $this->userRepository->insert($userData);
     
-    $numeroCompte = "CPR-" . time();
+//     $numeroCompte = "CPR-" . time();
 
-    $compteData['numero'] = $numeroCompte;
-    $compteData['typeCompte'] = "Principal";
-    $compteData['solde'] = 0;
-    $compteData['dateCreation'] = date('Y-m-d');
-    $compteData['id_user'] = $userId;
+//     $compteData['numero'] = $numeroCompte;
+//     $compteData['typeCompte'] = "Principal";
+//     $compteData['solde'] = 0;
+//     $compteData['dateCreation'] = date('Y-m-d');
+//     $compteData['id_user'] = $userId;
 
-    return $this->compteRepository->insert($compteData);
-}
+//     return $this->compteRepository->insert($compteData);
+// }
 
 
 }

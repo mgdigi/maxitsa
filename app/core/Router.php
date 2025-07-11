@@ -4,7 +4,6 @@ namespace App\Core;
 
 require_once "../app/config/middlewares.php";
 
-use App\Core\Error404Controller;
 
 class Router{
 
@@ -30,15 +29,14 @@ class Router{
             $route = $uris[$currentUri];
             $controllerClass = $route['controller'];
             $method = $route['method'];
-            $middlewares = $route['middlewares'] ?? null;
-
-            runMiddleware($middlewares);
-
+             $middlewares = $route['middlewares'] ?? [];
+            
+            runMiddleWare($middlewares);
+           
             $controller = new $controllerClass();
             $controller->$method();
         } else {
-            // $errorController = new Error404Controller();
-            // $errorController->index();
+           
         }
     }
 }
