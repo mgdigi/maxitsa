@@ -21,7 +21,7 @@ abstract class AbstractController extends Session{
     }
 
     public function __construct(){
-        $this->session = App::getDependency('core', 'session');
+        $this->session = App::getDependency('core.session');
     }
 
 

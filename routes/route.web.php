@@ -25,7 +25,8 @@ $routes = [
     ],
     "/principalCreated" => [
         'controller' => CompteController::class,
-        'method' => 'createComptePrincipal'
+        'method' => 'createComptePrincipal',
+        'middlewares' => ['cryptPassword']
     ],
     "/logout" => [
         'controller' => SecurityController::class, 

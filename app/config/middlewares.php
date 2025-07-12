@@ -19,7 +19,6 @@ function runMiddleWare($middlewareNames = []) {
         if (isset($middlewares[$middlewareName])) {
             $middlewareClass = $middlewares[$middlewareName];
             $middleware = new $middlewareClass();
-            
             $middleware();
         }
     }

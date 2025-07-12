@@ -18,8 +18,8 @@ class SecurityController extends AbstractController{
     public function __construct(){
         parent::__construct();
         $this->layout = 'security';
-        $this->securityService = App::getDependency('services', key: 'securityServ');
-        $this->validator = App::getDependency('core','validator');
+        $this->securityService = App::getDependency('services.securityServ');
+        $this->validator = App::getDependency('core.validator');
     }
     public function index(){
         $this->unset('errors');
@@ -65,7 +65,7 @@ class SecurityController extends AbstractController{
         $user = $this->securityService->seConnecter($loginData['email'], $loginData['password']);  
          if($user){
              $this->session->set("user", $user->toArray());
-            header("Location:". $_ENV['APP_URL']. "/compte");
+            header("Location:". APP_URL. "/compte");
             exit();
          }else{
             $this->validator->addError('password', "Identifiant incorrect");
@@ -80,7 +80,7 @@ class SecurityController extends AbstractController{
 
     public function logout(){
         session_destroy();
-        header("Location:". $_ENV['APP_URL']);
+        header("Location:". APP_URL);
     }
     
 

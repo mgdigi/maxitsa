@@ -18,7 +18,7 @@ class TransactionService{
     }
 
     public function __construct(){
-        $this->transactionRepository = App::getDependency('repositories', 'transactionRepo');
+        $this->transactionRepository = App::getDependency('repositories.transactionRepo');
 
     }
 

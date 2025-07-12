@@ -14,7 +14,6 @@ class CompteController extends AbstractController{
 
     private Validator $validator;
     private SecurityService $securityService;
-
     private ImageService $imageService;
     private CompteService $compteService;
     private TransactionService $transactionService;
@@ -22,15 +21,15 @@ class CompteController extends AbstractController{
 
     public function __construct(){
            parent::__construct();
-          $this->validator = App::getDependency('core','validator');
-          $this->securityService = App::getDependency('services', 'securityServ');
-          $this->imageService = App::getDependency('core', 'imageServ');
-          $this->compteService = App::getDependency('services', 'compteServ');
-          $this->transactionService = App::getDependency('services', 'transactionServ');
+          $this->validator = App::getDependency('core.validator');
+          $this->securityService = App::getDependency('services.securityServ');
+          $this->imageService = App::getDependency('core.imageServ');
+          $this->compteService = App::getDependency('services.compteServ');
+          $this->transactionService = App::getDependency('services.transactionServ');
     }
      public function index(){
 
-        $comptes = $this->compteService->compteClient($_SESSION['user']['id']);
+        $comptes = $this->compteService->compteClient($this->session->get('user', 'id'));
         $transactions = $this->transactionService->getTransactionByClient($_SESSION['user']['id']);
         $this->render('compte/home.php', [
             'transactions' => $transactions,
@@ -79,7 +78,7 @@ private function buildUserData(array $data, string $photoPath): array {
         'nom' => $data['nom'],
         'prenom' => $data['prenom'],
         'login' => $data['login'],
-        'password' => password_hash($data['password'], PASSWORD_BCRYPT),
+        'password' => $data['password'],
         'adresse' => $data['adresse'],
         'numeros' => $data['numeros'],
         'numeroCNI' => $data['numeroCNI'],

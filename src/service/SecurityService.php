@@ -21,8 +21,8 @@ class SecurityService{
 
 
     public function __construct(){
-        $this->userRepository = App::getDependency('repositories', 'usersRepo');
-        $this->compteRepository = App::getDependency('repositories', 'compteRepo');
+        $this->userRepository = App::getDependency('repositories.usersRepo');
+        $this->compteRepository = App::getDependency('repositories.compteRepo');
     }
 
     public function seConnecter(string $login, string $password): ?User {
@@ -33,23 +33,6 @@ class SecurityService{
     return null;
 }
 
-
-//     public function creerComptePrincipal(array $userData, array $compteData): bool|string {
-//     $existing = $this->compteRepository->findPrincipalByUserId($userData['id_user'] ?? 0);
-//     if ($existing) return "Un compte principal existe déjà pour cet utilisateur.";
-
-//     $userId = $this->userRepository->insert($userData);
-    
-//     $numeroCompte = "CPR-" . time();
-
-//     $compteData['numero'] = $numeroCompte;
-//     $compteData['typeCompte'] = "Principal";
-//     $compteData['solde'] = 0;
-//     $compteData['dateCreation'] = date('Y-m-d');
-//     $compteData['id_user'] = $userId;
-
-//     return $this->compteRepository->insert($compteData);
-// }
 
 
 }
