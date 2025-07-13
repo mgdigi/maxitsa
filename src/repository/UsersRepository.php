@@ -26,7 +26,7 @@ class UsersRepository extends AbstractRepository{
 
     public function selectAll(){}
      public function insert($userData){
-        $sql = "INSERT INTO $this->table (nom, prenom,login, password, adresse, numeros, numeroCNI, photoIdentite, type_user_id) values (:nom, :prenom, :login, :password, :adresse, :numeros, :numeroCNI, :photoIdentite, :type_user_id)";
+        $sql = "INSERT INTO $this->table (nom, prenom,login, password, adresse, numeroCNI, photoIdentite, type_user_id) values (:nom, :prenom, :login, :password, :adresse, :numeroCNI, :photoIdentite, :type_user_id)";
         $stmt = $this->pdo->prepare($sql);
         $result = $stmt->execute($userData);
         
@@ -37,6 +37,7 @@ class UsersRepository extends AbstractRepository{
         }
      }
 
+     
 
 
      public function selectByLoginAndPassword(string $login, string $passwors): null|User{
@@ -56,7 +57,7 @@ class UsersRepository extends AbstractRepository{
     }
 
     public function selectByLogin(string $login): ?User {
-    $query = "SELECT id, nom, prenom, login, password, adresse, numeros, numeroCNI, photoIdentite, type_user_id
+    $query = "SELECT id, nom, prenom, login, password, adresse, numeroCNI, photoIdentite, type_user_id
     FROM $this->table WHERE login = :login";
     $stmt = $this->pdo->prepare($query);
     $stmt->execute(['login' => $login]);
@@ -68,7 +69,12 @@ class UsersRepository extends AbstractRepository{
 
      public function update(){}
      public function delete(){}
-     public function selectById(){}
+     public function selectById($id){
+        $query = "SELECT * FROM {$this->table} WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch() ?: null;
+     }
      public function selectBy(array $filter){}
 
 }

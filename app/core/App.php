@@ -9,9 +9,12 @@ use App\Core\Database;
 use App\Core\Session;
 use App\Core\Validator;
 use App\Core\Router;
+
 use App\Repository\UsersRepository;
 use App\Repository\CompteRepository;
 use App\Repository\TransactionRepository;
+use App\Repository\TelephoneRepository;
+
 use App\Service\SecurityService;
 use App\Service\CompteService;
 use App\Service\TransactionService;
@@ -49,6 +52,7 @@ class App
                 'usersRepo' => UsersRepository::class,
                 'compteRepo' => CompteRepository::class,
                 'transactionRepo' => TransactionRepository::class,
+                'telephoneRepo' => TelephoneRepository::class,
             ]
         ];
 

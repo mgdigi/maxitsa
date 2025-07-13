@@ -27,10 +27,10 @@ class ImageService{
         $imageExtension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
         
         $uniqueImageName = uniqid() . '.' . $imageExtension;
-$targetDirectory = __DIR__ . '/../../public/images/uploads/'; 
+$targetDirectory = __DIR__ . '/../..'. IMG_DIR ; 
 $imagePath = $targetDirectory . $uniqueImageName;
 
-$imageUrl = $_ENV['APP_URL'] . '/public/images/uploads/' . $uniqueImageName;
+$imageUrl = APP_URL . IMG_DIR . $uniqueImageName;
 
 if (!is_dir($targetDirectory)) {
     if (!mkdir($targetDirectory, 0755, true)) {

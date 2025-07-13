@@ -12,7 +12,6 @@ class User extends AbstractEntity{
     private string  $password;
     private string  $adresse;
 
-    private array $numeros;
 
     private string $numeroCNI;
     private string $photoIdentite;
@@ -151,25 +150,7 @@ class User extends AbstractEntity{
         return $this;
     }
 
-    /**
-     * Get the value of numeros
-     */ 
-    public function getNumeros()
-    {
-        return $this->numeros;
-    }
-
-    /**
-     * Set the value of numeros
-     *
-     * @return  self
-     */ 
-    public function setNumeros($numeros)
-    {
-        $this->numeros = $numeros;
-
-        return $this;
-    }
+    
 
     /**
      * Get the value of numeroCNI

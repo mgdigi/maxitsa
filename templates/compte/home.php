@@ -1,4 +1,5 @@
-  <div class="grid grid-cols-5 gap-16 mb-8">
+
+ <div class="grid grid-cols-5 gap-16 mb-8">
                     <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
                     <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
                     <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
@@ -28,11 +29,12 @@
                     <input type="text" class="w-full rounded-xl p-4 border border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-maxit" placeholder="Entrer le numéro de compte">
                    </div>
                    <div class="self-center"> 
-                    <button class="p-3 bg-[#F4F4F4] rounded-xl shadow-sm flex gap-2">
+                    <a href="/compteSecondaire">
+                    <button  class="p-3 bg-[#F4F4F4] rounded-xl shadow-sm flex gap-2">
                         <img src="./assets/icons/addacount.svg" alt="add icon" class="w-7 h-7">
-                        
                     Creer un Compte  secondaire
                     </button>
+                    </a>
                    </div>
                    <div class="self-center">
                     <button class="p-3 bg-[#F4F4F4] flex gap-2 rounded-xl shadow-sm">
@@ -71,3 +73,5 @@
             </main>
         </div>
     </div>
+
+  

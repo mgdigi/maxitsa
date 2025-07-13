@@ -21,7 +21,7 @@
                                 <div class="w-8 h-8 bg-orange-500 rounded-full"></div>
                             </div>
                             <div>
-                                <div class="font-bold text-gray-800">Mohamed GUEYE</div>
+                                <div class="font-bold text-gray-800"><?= $_SESSION['user']['prenom']  .' ' . $_SESSION['user']['nom']?></div>
                                 <div class="text-sm text-gray-600">78 011 82 23</div>
                             </div>
                         </div>

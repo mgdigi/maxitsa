@@ -13,6 +13,12 @@ $routes = [
         'controller' => CompteController::class, 
         'method' => 'create',
     ],
+    '/compteSecondaire' => [
+        'controller' => CompteController::class,
+        'method' => 'show',
+        'middlewares' => ['auth']
+
+    ],
     '/compte' => [
         'controller' => CompteController::class,
         'method' => 'index',
@@ -27,6 +33,10 @@ $routes = [
         'controller' => CompteController::class,
         'method' => 'createComptePrincipal',
         'middlewares' => ['cryptPassword']
+    ],
+    "/secondaireCreated" => [
+        'controller' => CompteController::class,
+        'method' => 'createCompteSecondaire'
     ],
     "/logout" => [
         'controller' => SecurityController::class, 

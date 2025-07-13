@@ -14,5 +14,6 @@ define('dsn', $_ENV['dsn'] );
 define('TWILIO_SID', $_ENV['TWILIO_SID']);
 define('TWILIO_TOKEN', $_ENV['TWILIO_TOKEN']);
 define('TWILIO_FROM', $_ENV['TWILIO_FROM']);
+define('IMG_DIR' , $_ENV['IMG_DIR']);
 
 

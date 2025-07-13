@@ -148,17 +148,17 @@
                                 <input type="text" name="adresse" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
                                 <?php if(!empty($_SESSION['errors']['adresse'])): ?>
                                         <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
-                                        <p class="text-sm text-white "><?= $_SESSION['errors']['adresse']; ?> <p>
+                                        <p class="text-sm text-white "><?= $this->session->get('errors', 'adresse') ?> <p>
                                         </div>
                                     <?php endif; ?>
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Telephone</label>
-                                <input type="text" name="numeros" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
-                                <?php if(!empty($_SESSION['errors']['numeros'])): ?>
+                                <input type="text" name="telephone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
+                                <?php if(!empty($_SESSION['errors']['telephone'])): ?>
                                         <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
-                                        <p class="text-sm text-white "><?= $_SESSION['errors']['numeros']; ?> <p>
+                                        <p class="text-sm text-white "><?= $_SESSION['errors']['telephone']; ?> <p>
                                         </div>
                                     <?php endif; ?>
                             </div>

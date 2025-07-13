@@ -39,14 +39,11 @@ class SecurityController extends AbstractController{
 
     public function login(){
 
-        
-
         $loginData = [
             'email' => $_POST['login'] ?? '',
             'password' => $_POST['password'] ?? ''
         ];
       
-
         $rules = [
             'email' => [
                 'required',

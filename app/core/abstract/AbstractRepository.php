@@ -16,7 +16,7 @@ abstract class AbstractRepository extends Database{
     abstract public function insert(array $data);
     abstract public function update();
     abstract public function delete();
-    abstract public function selectById();
+    abstract public function selectById($id);
     abstract public function selectBy(array $filter);
 
 
