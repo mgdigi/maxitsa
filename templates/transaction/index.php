@@ -117,12 +117,10 @@
                         </td>
                         <td class="px-6 py-4 text-sm">
                             <?php 
-                            // Vérifier si la transaction peut être annulée
                             $peutAnnuler = in_array($transaction['typetransaction'], ['depot', 'depot_entrant', 'depot_sortant']) 
                                         && ($transaction['status'] === false || $transaction['status'] === 'f' || $transaction['status'] === null)
                                         && $transaction['status'] !== 'annulee';
                             
-                            // Vérifier la date (24h)
                             $dateTransaction = new DateTime($transaction['datetransaction']);
                             $maintenant = new DateTime();
                             $diff = $maintenant->diff($dateTransaction);
