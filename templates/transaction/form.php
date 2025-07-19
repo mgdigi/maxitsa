@@ -64,7 +64,6 @@
                 <select
                     id="compte_expediteur_id"
                     name="compte_expediteur_id"
-                    required
                     class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                 >
                     <option value="">Sélectionnez le compte expéditeur</option>
@@ -92,7 +91,6 @@
                 <select
                     id="compte_destinataire_id"
                     name="compte_destinataire_id"
-                    required
                     class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                 >
                     <option value="">Sélectionnez le compte destinataire</option>
@@ -125,7 +123,6 @@
                     min="1"
                     step="1"
                     value="<?= isset($_SESSION['form_data']['montant']) ? htmlspecialchars($_SESSION['form_data']['montant']) : '' ?>"
-                    required
                     class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                 >
             </div>
