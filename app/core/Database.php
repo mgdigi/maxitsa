@@ -2,17 +2,17 @@
 
 namespace App\Core;
 
+
 use \PDO;
 use \PDOException;
 
 class Database{
     
     private $connection;
-    private  static $instance = null;
+    private  static Database|null $instance = null;
 
-      private function __construct() {
+      protected function __construct() {
         
-
         try {
            
             $this->connection = new PDO(

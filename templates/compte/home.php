@@ -1,13 +1,3 @@
-
- <div class="grid grid-cols-5 gap-16 mb-8">
-                    <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
-                    <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
-                    <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
-                    <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
-                </div>
-
-                <?php foreach($comptes as $compte): ?>
-                
                 <div class="flex  justify-beetween gap-6 mb-8">
                     <div class="bg-[#F4F4F4] w-[50%] rounded-xl p-6 border-2 shadow-sm">
                         <div class="flex items-center justify-between gap-5">
@@ -16,7 +6,7 @@
                                    <img src="./assets/icons/solde.svg" alt="solde icon"  class="h-15 w-15">                                
                                 </div>
                                 <div>
-                                    <div class="text-3xl font-bold text-gray-800"><?=  $compte['solde']  ?> CFA</div>
+                                    <div class="text-3xl font-bold text-gray-800"><?=  $this->session->get('comptes','solde')  ?> CFA</div>
                                     <div class="text-gray-600 font-medium">Solde de mon Compte principal</div>
                                 </div>
                             </div>
@@ -37,20 +27,21 @@
                     </a>
                    </div>
                    <div class="self-center">
-                    <button class="p-3 bg-[#F4F4F4] flex gap-2 rounded-xl shadow-sm">
+                    <a href="/listComptes">
+                    <button class="p-3 bg-[#F4F4F4] flex gap-2 rounded-xl shadow-sm ">
                         <img src="./assets/icons/changer.svg" alt="add icon" class="w-7 h-7">
                         Changer de  compte
                     </button>
+                    </a>
                    </div>
                     
                 </div>
 
-                <?php endforeach; ?>
                 
                 <div class="bg-white rounded-xl p-6 border border-orange-200 shadow-sm">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-lg font-semibold text-gray-800">10 dernières transactions</h2>
-                        <button class="text-gray-600 hover:text-orange-maxit transition-colors">Voir plus</button>
+                      <a href="/listTransactions">  <button class="text-gray-600 hover:text-orange-maxit transition-colors">Voir plus</button> </a>
                     </div>
                     
                     <div class="grid grid-cols-5 gap-4">

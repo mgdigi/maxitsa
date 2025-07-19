@@ -44,6 +44,7 @@ class ComposerStaticInitbd816c03f468beb21be119c01aee65d1
             'App\\Core\\Abstract\\' => 18,
             'App\\Core\\' => 9,
             'App\\Controller\\' => 15,
+            'App\\Config\\Translate\\Fr\\' => 24,
         ),
     );
 
@@ -103,6 +104,10 @@ class ComposerStaticInitbd816c03f468beb21be119c01aee65d1
         'App\\Controller\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/controller',
+        ),
+        'App\\Config\\Translate\\Fr\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/config/translate/fr',
         ),
     );
 

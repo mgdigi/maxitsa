@@ -7,8 +7,6 @@ use App\Core\Abstract\AbstractRepository;
 use PDO;
 
 class UsersRepository extends AbstractRepository{
-
-
     private static UsersRepository|null $instance = null;
 
     public static function getInstance():UsersRepository{
@@ -18,15 +16,16 @@ class UsersRepository extends AbstractRepository{
         return self::$instance;
     }
 
-    public function __construct(){
+    protected function __construct(){
         parent::__construct();
     }
 
     private string $table = 'users';
 
     public function selectAll(){}
-     public function insert($userData){
-        $sql = "INSERT INTO $this->table (nom, prenom,login, password, adresse, numeroCNI, photoIdentite, type_user_id) values (:nom, :prenom, :login, :password, :adresse, :numeroCNI, :photoIdentite, :type_user_id)";
+
+     public function insert(array $userData){
+        $sql = "INSERT INTO $this->table (nom, prenom,login, password, typeuserid, adresse, numerocni, photoidentite) values (:nom, :prenom, :login, :password, :typeuserid, :adresse, :numerocni, :photoidentite)";
         $stmt = $this->pdo->prepare($sql);
         $result = $stmt->execute($userData);
         
@@ -37,9 +36,6 @@ class UsersRepository extends AbstractRepository{
         }
      }
 
-     
-
-
      public function selectByLoginAndPassword(string $login, string $passwors): null|User{
         $query = "SELECT * FROM $this->table WHERE login = :login AND password = :password";
         $stmt = $this->pdo->prepare($query);
@@ -47,7 +43,6 @@ class UsersRepository extends AbstractRepository{
             'login' => $login,
             'password' => $passwors
         ]);
-        
         $result = $stmt->fetch();
         if($result){
             return User::toObject($result);
@@ -57,11 +52,11 @@ class UsersRepository extends AbstractRepository{
     }
 
     public function selectByLogin(string $login): ?User {
-    $query = "SELECT id, nom, prenom, login, password, adresse, numeroCNI, photoIdentite, type_user_id
-    FROM $this->table WHERE login = :login";
+    $query = "SELECT * FROM $this->table WHERE login = :login";
     $stmt = $this->pdo->prepare($query);
     $stmt->execute(['login' => $login]);
     $result = $stmt->fetch();
+    // var_dump(User::toObject($result));  
     return $result ? User::toObject($result) : null;
 }
 

@@ -53,7 +53,7 @@
                 
                 <div class="lg:w-1/2 p-8">
                     <div class="max-w-md mx-auto">
-                        <div class="mb-8">
+                        <!-- <div class="mb-8">
                             <h2 class="text-2xl font-bold text-gray-800 mb-2">
                                 BIENVENUE SUR <span class="text-orange-500">MAXIT SA</span>
                             </h2>
@@ -61,7 +61,7 @@
                                 créer un compte pour bénéficier<br>
                                 de nos services
                             </p>
-                        </div>
+                        </div> -->
                         
                         <form class="space-y-6" action="principalCreated" method="post" enctype="multipart/form-data">
                             <div class="grid grid-cols-2 gap-4">
@@ -165,12 +165,12 @@
 
 
                             
-                            <div class="flex items-center space-x-4">
+                            <!-- <div class="flex items-center space-x-4">
                                 <label class="text-sm font-medium text-gray-700">solde initial :</label>
                                 <div class="flex-1 max-w-32">
                                     <input type="text" name="solde" value="0 FCFA" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-center font-medium">
                                 </div>
-                            </div>
+                            </div> -->
                             
                             <button type="submit" class="w-full bg-gradient-orange text-white font-bold py-4 px-6 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-200 transform hover:scale-105 shadow-lg">
                                 Enregistrer

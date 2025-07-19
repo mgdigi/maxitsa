@@ -3,7 +3,6 @@
 namespace App\Core;
 class Session {
 
-    private  static $session;
 
     private static ?Session  $instance = null;
 

@@ -27,7 +27,12 @@
         
         <div class="flex-1 flex flex-col">
     <?php require_once '../templates/layout/partial/header.html.php'; ?>
-       
+        <div class="grid grid-cols-5 gap-16 m-8">
+                    <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
+                    <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
+                    <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
+                    <div class="bg-orange-maxit rounded-3xl h-28 shadow-sm"></div>
+                </div>
             
     <main class="flex-1 p-6 bg-gray-5">
     <?php echo $contentForLayout ?>

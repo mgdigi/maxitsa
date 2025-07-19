@@ -215,7 +215,7 @@ class User extends AbstractEntity{
     public static function toObject(array $data):static{
         $data['numeroCNI'] = $data['numeroCNI'] ?? '';
          $data['photoIdentite'] = $data['photoIdentite'] ?? '';
-        return new static(
+        $User =  new static(
             $data['id'],
             $data['nom'],
             $data['prenom'],
@@ -225,13 +225,13 @@ class User extends AbstractEntity{
             $data['numeroCNI'],
             $data['photoIdentite']
         );
-        if(isset($data['user_type__id'])){
+        if(isset($data['typeUser'])){
             $typeUser = new TypeUser();
             $typeUser->setid($data['user_type__id']);
-            if(isset($data['user_type_libelle'])){
-                $typeUser->setLibelle($data['user_type_libelle']);
-            }
+            
         }
+
+        return $User;   
 
     }
 

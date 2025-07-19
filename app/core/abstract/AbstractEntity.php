@@ -12,4 +12,8 @@ abstract class AbstractEntity {
      }
 }
 
-    
+
+
+
+
+

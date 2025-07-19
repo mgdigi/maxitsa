@@ -1,4 +1,3 @@
-<?php foreach ($comptes as $compte): ?>
     <div class="container mx-auto mt-9 px-4 py-8 align-self-center">
         <div class="max-w-md mx-auto bg-gray-200 rounded-xl shadow-lg p-6">
             <h1 class="text-2xl font-bold mb-6 text-center">Créer un Compte Secondaire</h1>
@@ -61,4 +60,3 @@
             </form>
         </div>
     </div>
-<?php endforeach; ?>

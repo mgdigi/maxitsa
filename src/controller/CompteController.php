@@ -11,7 +11,6 @@ use App\Service\TransactionService;
 use App\Service\TwilioService;
 
 class CompteController extends AbstractController{
-
     private Validator $validator;
     private SecurityService $securityService;
     private ImageService $imageService;
@@ -21,16 +20,17 @@ class CompteController extends AbstractController{
 
     public function __construct(){
            parent::__construct();
-          $this->validator = App::getDependency('core.validator');
-          $this->securityService = App::getDependency('services.securityServ');
-          $this->imageService = App::getDependency('core.imageServ');
-          $this->compteService = App::getDependency('services.compteServ');
-          $this->transactionService = App::getDependency('services.transactionServ');
+          $this->validator = App::getDependency('validator');
+          $this->securityService = App::getDependency('securityServ');
+          $this->imageService = App::getDependency('imageServ');
+          $this->compteService = App::getDependency('compteServ');
+          $this->transactionService = App::getDependency('transactionServ');
     }
      public function index(){
 
-        $comptes = $this->compteService->compteClient($this->session->get('user', 'id'));
-        $transactions = $this->transactionService->getTransactionByClient($_SESSION['user']['id']);
+        $comptes = $this->compteService->comptePrincipalClient($this->session->get('user', 'id'));
+        $this->session->set('comptes', $comptes);
+        $transactions = $this->transactionService->getTransactionByClient($this->session->get('user', 'id'));
         $this->render('compte/home.php', [
             'transactions' => $transactions,
             'comptes' => $comptes, ]);
@@ -39,43 +39,25 @@ class CompteController extends AbstractController{
         $this->layout = 'security';
         $this->render('compte/form.principal.php');
      }
-     public function store(){}
-     public function edit(){}
-     public function show(){
-        $comptes = $this->compteService->compteClient($this->session->get('user', 'id'));
+     public function store(){
+          $comptes = $this->compteService->comptePrincipalClient($this->session->get('user', 'id'));
         $this->render('compte/form.secondaire.php', [
             'comptes' => $comptes, ]);
      }
+     public function edit(){}
+     public function show(){
+        $comptes = $this->compteService->comptesSecondairesClient($this->session->get('user', 'id'));
+        $this->render('compte/liste.compte.php', [
+            'comptes' => $comptes]);
+     }
 
      private function validateForm(array &$data): array {
-    $this->validator->validate($data, [
-        'nom' => ['required', ['minLength', 3]],
-        'prenom' => ['required', ['minLength', 3]] ,
-        'login' => ['required', ['minLength', 4], 'isMail'],
-        'password' => ['required', ['minLength', 4], 'isPassword'],
-        'adresse' => ['required'],
-        'telephone' => ['required', 'isPhone'],
-        'numeroCNI' => ['required', 'isCNI']
-    ]);
-
-    return $this->validator->getErrors();
+      require_once "../app/config/rules.php";
+      $this->validator->validate($data, $rules);
+      return $this->validator->getErrors();
 }
 
-private function uploadPhotos(array $files): string|false {
-    try {
-        $uploads = ImageService::uploadMultipleImages([
-            'photoRecto' => $files['photoRecto'] ?? null,
-            'photoVerso' => $files['photoVerso'] ?? null
-        ], __DIR__ . '/../../public/images/uploads/');
 
-        return json_encode([
-            'recto' => $uploads['photoRecto']['url'],
-            'verso' => $uploads['photoVerso']['url']
-        ]);
-    } catch (\Exception $e) {
-        return false;
-    }
-}
 
 private function buildUserData(array $data, string $photoPath): array {
     return [
@@ -91,93 +73,14 @@ private function buildUserData(array $data, string $photoPath): array {
 }
 
 
+public function createCompteSecondaire() { 
+      require_once "../app/config/rules.php";
 
-
-public function createComptePrincipal() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $data = $_POST;
-        $numeroTelephone = $data['telephone'];    
-        $errors = $this->validateForm($data);
-    $this->session->set('errors', []);
-
-
-        if (empty($errors)) {
-            $photoPath = $this->uploadPhotos($_FILES);
-            if (!$photoPath) {
-                $this->session->set('errors', ['photoIdentite' => "Erreur lors de l'envoi des photos."]);
-            } else {
-                $userData = $this->buildUserData($data, $photoPath);
-
-                $result = $this->compteService->creerComptePrincipal($userData, $numeroTelephone);
-                if ($result === true) {
-                    header("Location: ".APP_URL."/");
-
-                    $twilioService = new TwilioService();
-                    $message = "Bonjour {$userData['prenom']} {$userData['nom']}, votre compte principal a été  créé avec succès sur Maxit SA}.";
-                    $smsResult = $twilioService->sendSMS($numeroTelephone, $message);
-
-                    if ($smsResult !== true) {
-                        error_log("Erreur SMS Twilio : " . $smsResult);
-                    }
-                    exit;
-                }
-                 else {
-                    $this->session->set('errors', ['compte' => $result]);
-                }
-
-            }
-        } else {
-            $this->session->set('errors', $errors);
-        }
-    }
-
-    $this->layout = 'security';
-    $this->render("compte/form.principal.php");
-}
-
-// public function createCompteSecondaire(){
-//      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//         $data = $_POST;
-
-//         $rules = [
-//             'telephone' => ['required', 'isPhone'],
-//         ];
-//         $errors = $this->validator->validate($data, $rules);
-
-//         $userId = $this->session->get('user', 'id');
-//         $numeroTel = $data['telephone'];
-//         $soldeInitial  = $data['solde'];
-
-//         if(empty($errors)) {
-//         $newCompteSecondaire = $this->compteService->creerCompteSecondaire($userId, $numeroTel, $soldeInitial);
-//         if ($newCompteSecondaire) {
-//             $this->session->set('success', 'Compte secondaire créé avec succès.');
-//             header("Location: ".APP_URL."/compte");
-//             exit;
-//         } else {
-//              $this->session->set('errors', $errors);
-//             header("Location: ".APP_URL."/compte");
-//             exit;
-//         }
-
-//     } 
-
-// }
-//     $this->render('compte/home.php');
-
-
-// }
-
-
-public function createCompteSecondaire() {  
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $this->session->unset('errors');
             $data = $_POST;
 
-             $rules = [
-            'telephone' => ['required', 'isPhone'],
-             ];
 
              $errors = $this->validator->validate($data, $rules);
             if (!$errors) {
@@ -197,7 +100,7 @@ public function createCompteSecondaire() {
             $soldeInitial = isset($data['solde']) && $data['solde'] !== '' ? (float)$data['solde'] : 0;
 
             $result = $this->compteService->creerCompteSecondaire($userId, $numeroTel, $soldeInitial);
-            if ($result === true) {
+            if ($result) {
                 $this->session->set('success', 'Compte secondaire créé avec succès !');
                 header("Location: " . APP_URL . "/compte");
                 exit;
@@ -215,6 +118,30 @@ public function createCompteSecondaire() {
     header("Location: " . APP_URL . "/compteSecondaire");
     exit;
 }
+
+public function changerTypeCompte() {
+    
+    try {
+        $newCompteId = $_REQUEST['compte_id'] ?? null;
+        $userId = $this->session->get('user', 'id');
+        $ancienComptePrincipal = $this->compteService->comptePrincipalClient($userId);        
+        $oldCompteId = $ancienComptePrincipal['compte_id'];        
+
+        $result = $this->compteService->changerTypeCompte($oldCompteId, $newCompteId);
+        
+        if ($result) {
+            $this->session->set('success', "Type de compte changé avec succès");
+        } else {
+            $this->session->set('error', "Erreur lors du changement de type de compte");
+        }
+    } catch (\Exception $e) {
+        $this->session->set('error', "Erreur système: " . $e->getMessage());
+    }
+
+    header('Location: /listComptes');
+    exit;
+}
+
 
 
 }

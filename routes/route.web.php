@@ -2,6 +2,7 @@
 
 use App\Controller\CompteController;
 use App\Controller\SecurityController;
+use App\Controller\TransactionController;
 
 
 $routes = [
@@ -15,7 +16,7 @@ $routes = [
     ],
     '/compteSecondaire' => [
         'controller' => CompteController::class,
-        'method' => 'show',
+        'method' => 'store',
         'middlewares' => ['auth']
 
     ],
@@ -30,7 +31,7 @@ $routes = [
         'method' => 'login'
     ],
     "/principalCreated" => [
-        'controller' => CompteController::class,
+        'controller' => SecurityController::class,
         'method' => 'createComptePrincipal',
         'middlewares' => ['cryptPassword']
     ],
@@ -42,4 +43,42 @@ $routes = [
         'controller' => SecurityController::class, 
         'method' => 'logout'
     ],
+
+    '/changerTypeCompte' => [
+    'controller' => CompteController::class,
+    'method' => 'changerTypeCompte',
+    'middlewares' => ['auth'] 
+],
+  '/getComptesSecondaires' => [
+    'controller' => CompteController::class,
+    'method' => 'getComptesSecondaires',
+    'middlewares' => ['auth']
+  ],
+  '/changerEnComptePrincipal' => [
+    'controller' => CompteController::class,
+    'method' => 'changerEnComptePrincipal',
+    'middlewares' => ['auth']
+  ],
+  '/listComptes' => [
+    'controller' => CompteController::class,
+    'method' => 'show',
+    'middlewares' => ['auth']
+  ],
+  '/listTransactions' => [
+    'controller' => TransactionController::class,
+    'method' => 'index',
+    'middlewares' => ['auth']
+  ],
+  '/transactionForm' => [
+    'controller' => TransactionController::class,
+    'method' => 'create',
+    'middlewares' => ['auth']
+  ],
+  '/createTransaction' => [
+    'controller' => TransactionController::class,
+    'method' => 'store',
+    'middlewares' => ['auth']
+  ]
+
+
 ];

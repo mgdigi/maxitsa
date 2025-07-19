@@ -17,20 +17,14 @@ use App\Repository\TelephoneRepository;
 
 use App\Service\SecurityService;
 use App\Service\CompteService;
-use App\Service\TransactionService;
+use App\Service\TransactionService; 
 
 class App
 {
-    private static array $container = [];
-    private static bool $initialized = false;
+    private static  array $dependencies = [];
 
-    private static function initialize(): void
-    {
-        if (self::$initialized) {
-            return;
-        }
-
-        $dependencies = [
+    public static function  init(){
+        self::$dependencies = [
             'core' => [
                 'database' => Database::class,
                 'session' => Session::class,
@@ -54,32 +48,24 @@ class App
                 'transactionRepo' => TransactionRepository::class,
                 'telephoneRepo' => TelephoneRepository::class,
             ]
-        ];
+            ];
+    }
 
-        foreach ($dependencies as $category => $services) {
-            foreach ($services as $key => $class) {
-                $flatKey = $category . '.' . $key;
-                self::$container[$flatKey] = fn() => $class::getInstance();
+    public static function getDependency(string $key){
+        if(empty(self::$dependencies)){
+            self::init();
+        }
+
+        foreach(self::$dependencies as $dependencie){
+            if(is_array($dependencie) && isset($dependencie[$key])){
+                $class =  $dependencie[$key];
+                if(method_exists($class, 'getInstance')){
+                    return $class::getInstance();
+                }
+                return new $class();
             }
+            
         }
-
-        self::$initialized = true;
     }
 
-    public static function getDependency(string $key)
-    {
-        self::initialize();
-
-        if (!isset(self::$container[$key])) {
-            throw new \Exception("Dependency '{$key}' not found");
-        }
-
-        $dependency = self::$container[$key];
-        
-        if (is_callable($dependency)) {
-            self::$container[$key] = $dependency();
-        }
-
-        return self::$container[$key];
-    }
 }

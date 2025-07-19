@@ -1,11 +1,18 @@
 <?php
 namespace App\Repository;
 
+use App\Core\App;
+use AppendIterator;
+use App\Repository\UsersRepository;
+use App\Repository\CompteRepository;
 use App\Core\Abstract\AbstractRepository;
 
 class TelephoneRepository extends AbstractRepository{
 
     private string $table = 'numeroTelephone';
+
+    private UsersRepository  $usersRepository;
+    private CompteRepository $compteRepository;
 
     private static TelephoneRepository|null $instance = null;
 
@@ -16,8 +23,10 @@ class TelephoneRepository extends AbstractRepository{
         return self::$instance;
     }
 
-    public function __construct(){
+    protected function __construct(){
         parent::__construct();
+        $this->usersRepository = App::getDependency('usersRepo');
+        $this->compteRepository = App::getDependency('compteRepo');
     }
 
     public function selectAll(){}
@@ -34,6 +43,56 @@ class TelephoneRepository extends AbstractRepository{
      public function delete(){}
      public function selectById($id){}
      public function selectBy(array $filter){}
+
+     public function insertPrincipale($user, $tel){
+        $this->pdo->beginTransaction();
+        try{
+            $user_id = $this->usersRepository->insert($user);
+            $compte_id = $this->compteRepository->insertComptePrincipal();
+
+            $stmt = $this->pdo->prepare("INSERT INTO {$this->table} (numero, user_id, compte_id) VALUES (:numero, :user_id, :compte_id)");
+            $stmt->execute(['numero' => $tel, 'user_id' => $user_id, 'compte_id' => $compte_id]);
+
+            $this->pdo->commit();
+            return true;
+
+        }catch (\Exception $e) {
+        $this->pdo->rollBack();
+        return "Erreur : " . $e->getMessage();
+    }
+     }
+
+     
+
+
+     public function insertSecondaire($user_id, $tel, $solde){
+        $this->pdo->beginTransaction();
+        try{
+            $compte_id = $this->compteRepository->insertSecondaire($solde);
+            $sql = "INSERT INTO {$this->table} (numero, user_id, compte_id) VALUES (:numero, :user_id, :compte_id)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['numero' => $tel, 'user_id' => $user_id, 'compte_id' => $compte_id]);
+            $comptePrincipal = $this->compteRepository->findPrincipalByUserId($user_id);
+            $soldePrincipal = $comptePrincipal['solde'];
+            var_dump($comptePrincipal);
+
+            if($solde > 0 && $solde < $soldePrincipal){
+                $newSolde = $soldePrincipal - $solde;
+                $this->compteRepository->updateSolde($comptePrincipal['compte_id'], $newSolde);
+                var_dump($soldePrincipal);
+                $this->pdo->commit();
+                return true;
+            }else{
+                throw new \Exception("Solde insuffisant");
+            }
+
+            
+
+        }catch (\Exception $e) {
+        $this->pdo->rollBack();
+        return "Erreur : " . $e->getMessage();
+    }
+     }
 
         public function findByNumero($numero): ?array {
         $query = "SELECT nt.*, c.*, u.nom, u.prenom FROM {$this->table} nt
@@ -55,6 +114,14 @@ class TelephoneRepository extends AbstractRepository{
         $stmt->execute(['id_user' => $userId]);
         return $stmt->fetchAll();
     }
+
+    public function findUserIdByCompteId($compteId): int {
+    $query = "SELECT user_id FROM numeroTelephone WHERE compte_id = :compte_id";
+    $stmt = $this->pdo->prepare($query);
+    $stmt->execute(['compte_id' => $compteId]);
+    $result = $stmt->fetch();
+    return $result ? $result['user_id'] : 0;
+}
 
     public function findByCompteId($compteId): ?array {
         $query = "SELECT * FROM {$this->table} WHERE compte_id = :id_compte";

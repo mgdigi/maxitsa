@@ -8,7 +8,7 @@ abstract class AbstractRepository extends Database{
 
     protected PDO $pdo;
 
-    public function __construct(){
+    protected function __construct(){
         $this->pdo = parent::getInstance()->getConnection();
     }
 

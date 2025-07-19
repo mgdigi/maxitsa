@@ -11,7 +11,7 @@
                     
                     <div class="flex items-center space-x-6">
                         <div class="bg-gray-light text-black px-4 py-2 rounded-lg font-bold text-sm">
-                            <?= $compte['numero'] ?>
+                                <div class="text-sm text-gray-600"><?=  $this->session->get('comptes', 'numerocompte') ?></div>
                         </div>
                         
                             <img src="./assets/icons/notif.svg" alt="user" class="w-7 h-7">
@@ -21,8 +21,8 @@
                                 <div class="w-8 h-8 bg-orange-500 rounded-full"></div>
                             </div>
                             <div>
-                                <div class="font-bold text-gray-800"><?= $_SESSION['user']['prenom']  .' ' . $_SESSION['user']['nom']?></div>
-                                <div class="text-sm text-gray-600">78 011 82 23</div>
+                                <div class="font-bold text-gray-800"><?= $this->session->get('user', 'prenom')  .' ' . $this->session->get('user', 'nom')?></div>
+                                <div class="text-sm text-gray-600"><?=  $this->session->get('comptes', 'numero') ?></div>
                             </div>
                         </div>
                     </div>

@@ -28,7 +28,7 @@
             <div class="max-w-xl max-h-[70%] w-full space-y-8">
                 <div class="lg:hidden text-center mb-8">
                     <div class="inline-block bg-orange-500 rounded-lg p-3 shadow-lg">
-                        <span class="text-white text-xl font-bold">MaxiI</span>
+                        <span class="text-white text-xl font-bold">Maxit</span>
                     </div>
                 </div>
                 
@@ -44,14 +44,14 @@
                                 Login
                             </label>
                             <input 
-                                type="tel" 
+                                type="login" 
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none input-focus transition-all duration-200 bg-gray-50"
                                 placeholder="Entrez votre login"
                                 name="login"
                             >
-                            <?php if(!empty($_SESSION['errors']['email'])): ?>
+                            <?php if(!empty($_SESSION['errors']['login'])): ?>
                             <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
-                            <p class="text-sm text-white "><?= $_SESSION['errors']['email']; ?> <p>
+                            <p class="text-sm text-white "><?= $_SESSION['errors']['login']; ?> <p>
                             </div>
                             <?php endif; ?>
                         </div>
