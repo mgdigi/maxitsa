@@ -1,5 +1,6 @@
 <?php
 
-require_once "../config/middlewares.php";
-require_once "../config/env.php";
+require_once "../app/config/middlewares.php";
+require_once "../app/config/env.php";
+
 
