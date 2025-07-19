@@ -64,6 +64,8 @@ class Migration
     dateTransaction TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     typeTransaction VARCHAR(50) NOT NULL CHECK (typeTransaction IN ('depot', 'retrait', 'paiement')),
     montant NUMERIC(15,2) NOT NULL CHECK (montant >= 0),
+    libelle Text NULL,
+    status bool  NULL,
     client_id INTEGER NOT NULL,
     compte_id INTEGER NOT NULL,
     FOREIGN KEY (client_id) REFERENCES users(id) ON DELETE SET NULL,

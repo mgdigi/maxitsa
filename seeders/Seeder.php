@@ -40,7 +40,7 @@ class Seeder
         self::$pdo->exec("INSERT INTO compte(numero, dateCreation,solde,typecompte) VALUES ('1234567890', '2023-01-01', 1000.00, 'principal');");
         self::$pdo->exec("INSERT INTO numeroTelephone(numero,user_id, compte_id) VALUES ('771234567',1, 1);");
 
-        self::$pdo->exec("INSERT INTO transactions(dateTransaction,typeTransaction,montant,client_id,compte_id) VALUES ('2023-01-01', 'depot', 500.00, 1, 1);");
+        self::$pdo->exec("INSERT INTO transactions(dateTransaction,typeTransaction,montant,libelle,client_id,compte_id) VALUES ('2023-01-01', 'depot', 500.00, 1, 1);");
 
 
         
