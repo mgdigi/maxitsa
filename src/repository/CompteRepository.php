@@ -20,7 +20,15 @@ class CompteRepository extends AbstractRepository{
         parent::__construct();
     }
 
-     public function selectAll(){}
+     public function selectAll(){
+        $sql = "select * , compte.numero as numerocompte , nt.numero as telephone from $this->table  join numeroTelephone nt on nt.compte_id = compte.id join users u on nt.user_id = u.id where compte.id in (select compte_id from numeroTelephone )";
+        $stmt = $this->pdo->prepare($sql);
+        $result = $stmt->execute();
+        if($result){
+            return $stmt->fetchAll();
+        }
+        return null;
+     }
    
 
      public function insert(array $data): bool|int {

@@ -78,7 +78,30 @@ $routes = [
     'controller' => TransactionController::class,
     'method' => 'store',
     'middlewares' => ['auth']
-  ]
+  ],
+  '/calculer-frais' => [
+    'controller' => TransactionController::class,
+    'method' => 'calculerFrais',
+    'middlewares' => ['auth']
+  ],
+  '/annuler-transaction' => [
+    'controller' => TransactionController::class,
+    'method' => 'annuler',
+    'middlewares' => ['auth']
+],
+
+// ],
+// '/search-transactions' => [
+//     'controller' => TransactionController::class,
+//     'method' => 'search',
+//     'middlewares' => ['auth']
+// ],
+
+// '/search-transactions-ajax' => [
+//     'controller' => TransactionController::class,
+//     'method' => 'searchAjax',
+//     'middlewares' => ['auth']
+// ],
 
 
 ];

@@ -21,7 +21,6 @@
                 Traitement en cours...
             </div>
         </div>
-        <!-- Ajoutez ceci au début de votre formulaire -->
 <?php if (isset($_SESSION['error_message'])): ?>
     <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
         ❌ <?= htmlspecialchars($_SESSION['error_message']); ?>
@@ -38,7 +37,16 @@
 
 
         <form id="transactionForm" class="space-y-6" method="POST" action="createTransaction">
-            
+            <div id="frais-info" class="hidden mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+    <div class="text-sm text-yellow-800">
+        <div>💰 <strong>Récapitulatif du transfert :</strong></div>
+        <div class="mt-1">
+            <span>Montant à transférer : <span id="montant-display">0</span> FCFA</span><br>
+            <span>Frais de transfert : <span id="frais-display">0</span> FCFA</span><br>
+            <strong>Total à débiter : <span id="total-display">0</span> FCFA</strong>
+        </div>
+    </div>
+</div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">
                     Type de transaction
@@ -62,8 +70,8 @@
                     <option value="">Sélectionnez le compte expéditeur</option>
                     
 
-                    <?php if (isset($comptes)) : ?>
-                        <?php foreach ($comptes as $compte) : ?>
+                    <?php if (isset($comptesClient)) : ?>
+                        <?php foreach ($comptesClient as $compte) : ?>
                             <option value="<?= htmlspecialchars($compte['compte_id']) ?>" 
                                     data-type="<?= htmlspecialchars($compte['typecompte']) ?>"
                                     data-solde="<?= htmlspecialchars($compte['solde']) ?>"
@@ -90,8 +98,8 @@
                     <option value="">Sélectionnez le compte destinataire</option>
                     
                    
-                    <?php if (isset($comptes)) : ?>
-                        <?php foreach ($comptes as $compte) : ?>
+                    <?php if (isset($allComptes)) : ?>
+                        <?php foreach ($allComptes as $compte) : ?>
                             <option value="<?= htmlspecialchars($compte['compte_id']) ?>"
                                     data-type="<?= htmlspecialchars($compte['typecompte']) ?>"
                                     data-solde="<?= htmlspecialchars($compte['solde']) ?>"
@@ -105,7 +113,6 @@
                 </select>
             </div>
 
-            <!-- Montant -->
             <div>
                 <label for="montant" class="block text-sm font-medium text-gray-700 mb-2">
                     Montant (FCFA) *
@@ -157,6 +164,40 @@
         </form>
 
     </div>
+
+    <script>
+function calculerEtAfficherFrais() {
+    const compteExp = document.getElementById('compte_expediteur_id').value;
+    const compteDest = document.getElementById('compte_destinataire_id').value;
+    const montant = parseFloat(document.getElementById('montant').value) || 0;
+    
+    if (compteExp && compteDest && montant > 0) {
+        fetch('/calculer-frais', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `compte_expediteur_id=${compteExp}&compte_destinataire_id=${compteDest}&montant=${montant}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.error) {
+                document.getElementById('montant-display').textContent = new Intl.NumberFormat('fr-FR').format(data.montant);
+                document.getElementById('frais-display').textContent = new Intl.NumberFormat('fr-FR').format(data.frais);
+                document.getElementById('total-display').textContent = new Intl.NumberFormat('fr-FR').format(data.total);
+                document.getElementById('frais-info').classList.remove('hidden');
+            }
+        });
+    } else {
+        document.getElementById('frais-info').classList.add('hidden');
+    }
+}
+
+document.getElementById('compte_expediteur_id').addEventListener('change', calculerEtAfficherFrais);
+document.getElementById('compte_destinataire_id').addEventListener('change', calculerEtAfficherFrais);
+document.getElementById('montant').addEventListener('input', calculerEtAfficherFrais);
+</script>
+
 
 </body>
 </html>

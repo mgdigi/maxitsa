@@ -59,6 +59,9 @@ class CompteService extends Singleton{
         return $this->compteRepository->selectSecondaireCompte($user_id);
     }
 
+    public function allComptes(){
+        return $this->compteRepository->selectAll();
+    }
     
 
     public function getComptesByUserId($userId): array {
