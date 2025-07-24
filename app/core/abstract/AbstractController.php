@@ -21,8 +21,8 @@ abstract class AbstractController extends Session{
         return self::$instance;
     }
 
-    public function __construct(){
-        $this->session = App::getDependency('session');
+    public function __construct(Session $session){
+        $this->session = $session;
     }
 
 
@@ -59,5 +59,28 @@ abstract class AbstractController extends Session{
         return false;
     }
 }
+
+
+    public  function fetchAPI($url) {
+        $context = stream_context_create([
+            'http' => [
+                'method' => 'GET',
+                'header' => [
+                    'Content-Type: application/json',
+                    'Accept: application/json'
+                ],
+                'timeout' => 30
+            ]
+        ]);
+        
+        $response = file_get_contents($url, false, $context);
+        
+        if ($response === false) {
+            throw new \Exception('Erreur lors de la récupération des données');
+        }
+        
+        return json_decode($response, true);
+    }
+
 
 }

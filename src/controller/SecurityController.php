@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 use App\Core\App;
+use App\Core\Session;
+
+
 use App\Core\Validator;
-
-
 use App\Service\TwilioService;
 use App\Service\SecurityService;
 use App\Core\Abstract\AbstractController;
@@ -18,11 +19,17 @@ class SecurityController extends AbstractController{
     private Validator $validator;
 
 
-    public function __construct(){
-        parent::__construct();
+    public function __construct(
+        Session $session,
+        SecurityService $securityService,
+        Validator $validator
+    ){
+        parent::__construct(
+            $this->session = $session
+        );
         $this->layout = 'security';
-        $this->securityService = App::getDependency('securityServ');
-        $this->validator = App::getDependency('validator');
+        $this->securityService =   $securityService;
+        $this->validator = $validator;
     }
     public function index(){
         $this->unset('errors');
@@ -38,7 +45,6 @@ class SecurityController extends AbstractController{
     public function edit(){
     }
 
-    // public function destroy(){}
 
     public function login(){
       require_once "../app/config/rules.php";
@@ -99,6 +105,7 @@ public function createComptePrincipal() {
         $numeroTelephone = $data['telephone'];    
         $errors = $this->validateForm($data);
         $this->session->set('errors', []);
+
 
 
         if (empty($errors)) {

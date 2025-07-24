@@ -16,7 +16,7 @@ class CompteRepository extends AbstractRepository{
         return self::$instance;
     }
 
-    protected function __construct(){
+    public function __construct(){
         parent::__construct();
     }
 

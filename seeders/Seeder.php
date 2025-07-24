@@ -19,7 +19,6 @@ class Seeder
             $_ENV['DB_USER'],
               $_ENV['DB_PASSWORD']);
             
-            // Activer le mode d'erreur pour PDO
             self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
     }
@@ -29,7 +28,6 @@ class Seeder
         self::connect();
 
         try {
-            // 1. Insertion des types d'utilisateurs
             self::$pdo->exec("INSERT INTO typeUser (libelle) VALUES 
                 ('client'),
                 ('serviceCommercial')");
