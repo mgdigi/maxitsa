@@ -16,10 +16,17 @@ class SecurityService extends Singleton{
     
 
 
-    protected function __construct(){
-        $this->userRepository = App::getDependency('usersRepo');
-        $this->compteRepository = App::getDependency('compteRepo');
-        $this->telephoneRepository = App::getDependency('telephoneRepo');
+    public function __construct(
+        UsersRepository $usersRepository,
+        CompteRepository $compteRepository,
+        TelephoneRepository $telephoneRepository,
+    ){
+        $this->userRepository = $usersRepository;
+        $this->telephoneRepository = $telephoneRepository;
+        $this->compteRepository = $compteRepository;
+        // $this->userRepository = App::getDependency('usersRepo');
+        // $this->compteRepository = App::getDependency('compteRepo');
+        // $this->telephoneRepository = App::getDependency('telephoneRepo');
     }
 
     public function seConnecter(string $login, string $password): ?User {

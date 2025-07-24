@@ -15,10 +15,15 @@ class TransactionRepository extends AbstractRepository{
 
     private static TransactionRepository|null $instance = null;
 
-    protected function __construct(){
+    public function __construct(
+        CompteRepository $compteRepository ,
+        TelephoneRepository $telephoneRepository
+    ){
         parent::__construct();
-        $this->compteRepository = App::getDependency('compteRepo');
-        $this->telephoneRepository = App::getDependency('telephoneRepo');
+        $this->compteRepository = $compteRepository;
+        $this->telephoneRepository = $telephoneRepository;
+        // $this->compteRepository = App::getDependency('compteRepo');
+        // $this->telephoneRepository = App::getDependency('telephoneRepo');
     }
 
     public static function getInstance():TransactionRepository{

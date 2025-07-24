@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Controller;
-use App\Core\Abstract\AbstractController;
 use App\Core\App;
+use App\Core\Session;
 use App\Core\Validator;
-use App\Service\SecurityService;
 use App\Core\ImageService;
 use App\Service\CompteService;
-use App\Service\TransactionService;
 use App\Service\TwilioService;
+use App\Service\SecurityService;
+use App\Service\TransactionService;
+use App\Core\Abstract\AbstractController;
 
 class CompteController extends AbstractController{
     private Validator $validator;
@@ -18,16 +19,26 @@ class CompteController extends AbstractController{
     private TransactionService $transactionService;
     
 
-    public function __construct(){
-           parent::__construct();
-          $this->validator = App::getDependency('validator');
-          $this->securityService = App::getDependency('securityServ');
-          $this->imageService = App::getDependency('imageServ');
-          $this->compteService = App::getDependency('compteServ');
-          $this->transactionService = App::getDependency('transactionServ');
+    public function __construct(
+        Session $session,
+        Validator $validator, 
+        SecurityService $serviceService,
+        ImageService $imageService, 
+        CompteService $compteService,
+        TransactionService $transactionService
+    ){
+           parent::__construct( 
+            $this->session = $session
+           );
+          $this->validator = $validator;
+          $this->securityService = $serviceService;
+          $this->imageService = $imageService;
+          $this->compteService = $compteService;
+          $this->transactionService = $transactionService;
     }
-     public function index(){
 
+
+     public function index(){
         $comptes = $this->compteService->comptePrincipalClient($this->session->get('user', 'id'));
         $this->session->set('comptes', $comptes);
         $transactions = $this->transactionService->getTransactionByClient($this->session->get('user', 'id'));
@@ -36,6 +47,7 @@ class CompteController extends AbstractController{
             'comptes' => $comptes, ]);
      }
      public function create(){
+    //    $citoyens = $this->fetchAPI('https://appdafapi.onrender.com/api/citoyens');
         $this->layout = 'security';
         $this->render('compte/form.principal.php');
      }

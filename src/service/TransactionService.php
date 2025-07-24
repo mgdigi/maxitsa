@@ -13,9 +13,15 @@ class TransactionService extends Singleton{
     private CompteRepository $compteRepository;
 
 
-    protected function __construct(){
-        $this->transactionRepository = App::getDependency('transactionRepo');
-        $this->compteRepository = App::getDependency('compteRepo');
+    public function __construct(
+        TransactionRepository $transactionRepository,
+        CompteRepository $compteRepository
+    ){
+
+        $this->transactionRepository = $transactionRepository;
+        $this->compteRepository = $compteRepository;
+        // $this->transactionRepository = App::getDependency('transactionRepo');
+        // $this->compteRepository = App::getDependency('compteRepo');
         
         
 

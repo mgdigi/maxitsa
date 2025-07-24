@@ -29,11 +29,11 @@ class Router{
             $route = $uris[$currentUri];
             $controllerClass = $route['controller'];
             $method = $route['method'];
-             $middlewares = $route['middlewares'] ?? [];
+            $middlewares = $route['middlewares'] ?? [];
             
             runMiddleWare($middlewares);
            
-            $controller = new $controllerClass();
+            $controller = App::get($controllerClass);
             $controller->$method();
         } else {
            

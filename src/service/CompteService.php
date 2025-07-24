@@ -20,12 +20,21 @@ class CompteService extends Singleton{
 
     
 
-    protected function __construct(){
-        $this->compteRepository = App::getDependency('compteRepo');
-        $this->userRepository = App::getDependency('usersRepo');
-        $this->telephoneRepository = App::getDependency('telephoneRepo');
-        $this->transactionRepository = App::getDependency('transactionRepo');
-        $this->pdo = App::getDependency('database')->getConnection();
+    public function __construct(
+        CompteRepository $compteRepository,
+        UsersRepository $userRepository,
+        TelephoneRepository $telephoneRepository,
+        TransactionRepository $transactionRepository,
+
+    ){
+        $this->compteRepository = $compteRepository;
+        $this->userRepository = $userRepository;
+        $this->telephoneRepository = $telephoneRepository;
+        $this->transactionRepository = $transactionRepository;
+        // $this->compteRepository = App::getDependency('compteRepo');
+        // $this->userRepository = App::getDependency('usersRepo');
+        // $this->telephoneRepository = App::getDependency('telephoneRepo');
+        // $this->transactionRepository = App::getDependency('transactionRepo');
 
     }
      

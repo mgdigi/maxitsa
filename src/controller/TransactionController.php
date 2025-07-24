@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Core\App;
+use App\Core\Session;
 use App\Service\CompteService;
 use App\Service\TransactionService;
 use App\Core\Abstract\AbstractController;
@@ -11,19 +12,22 @@ class TransactionController extends AbstractController{
 
     private TransactionService $transactionService;
     private CompteService $compteService;
-    public function __construct(){
-        parent::__construct();
-        $this->transactionService = App::getDependency('transactionServ');
-        $this->compteService = App::getDependency('compteServ');
+    public function __construct(
+
+        Session $session,
+        TransactionService $transactionService,
+        CompteService $compteService
+    ){
+        parent::__construct(
+
+            $this->session = $session
+        );
+    
+        $this->transactionService = $transactionService;
+        $this->compteService = $compteService;
 
     }
-    // public function index(){
-    //     $transactions = $this->transactionService->getTransactionByClient($this->session->get('user', 'id'));
-        
-    //     $this->render('transaction/index.php', [
-    //         'transactions' => $transactions,
-    //     ]);
-    // }
+  
     public function create(){
         $comptesClient = $this->compteService->comptesClient($this->session->get('user', 'id'));
         $allComptes = $this->compteService->allComptes();

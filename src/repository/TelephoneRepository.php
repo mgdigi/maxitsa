@@ -18,15 +18,21 @@ class TelephoneRepository extends AbstractRepository{
 
     public static function getInstance():TelephoneRepository{
         if(self::$instance == null){
-            self::$instance = new TelephoneRepository();
+            self::$instance = new self();
         }
         return self::$instance;
     }
 
-    protected function __construct(){
+    public function __construct(
+        UsersRepository $usersRepository ,
+        CompteRepository $compteRepository 
+   ){
         parent::__construct();
-        $this->usersRepository = App::getDependency('usersRepo');
-        $this->compteRepository = App::getDependency('compteRepo');
+        $this->usersRepository = $usersRepository;
+        $this->compteRepository = $compteRepository;
+
+        // $this->usersRepository = App::getDependency('usersRepo');
+        // $this->compteRepository = App::getDependency('compteRepo');
     }
 
     public function selectAll(){}
