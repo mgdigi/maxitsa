@@ -17,6 +17,11 @@ COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
 # Installer Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+COPY . /app
+
+RUN chown -R www-data:www-data /app
+
+
 WORKDIR /app
 
 EXPOSE 80

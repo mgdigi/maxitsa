@@ -31,10 +31,7 @@ class CompteService extends Singleton{
         $this->userRepository = $userRepository;
         $this->telephoneRepository = $telephoneRepository;
         $this->transactionRepository = $transactionRepository;
-        // $this->compteRepository = App::getDependency('compteRepo');
-        // $this->userRepository = App::getDependency('usersRepo');
-        // $this->telephoneRepository = App::getDependency('telephoneRepo');
-        // $this->transactionRepository = App::getDependency('transactionRepo');
+    
 
     }
      
