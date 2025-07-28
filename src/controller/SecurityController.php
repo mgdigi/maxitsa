@@ -79,7 +79,7 @@ class SecurityController extends AbstractController{
       require_once "../app/config/rules.php";
       $this->validator->validate($data, $rules);
       return $this->validator->getErrors();
-}
+    }
 
 
 

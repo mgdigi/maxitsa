@@ -7,14 +7,7 @@ class CompteRepository extends AbstractRepository{
 
     private string $table = 'compte';
 
-    private static CompteRepository|null $instance = null;
-
-    public static function getInstance():CompteRepository{
-        if(self::$instance == null){
-            self::$instance = new CompteRepository();
-        }
-        return self::$instance;
-    }
+   
 
     public function __construct(){
         parent::__construct();
@@ -87,8 +80,7 @@ class CompteRepository extends AbstractRepository{
     
 
 
-     public function update(){}
-     public function delete(){}
+   
     
 
      public function selectByClient($user_id){
@@ -116,7 +108,6 @@ class CompteRepository extends AbstractRepository{
         return $result && $rowsAffected > 0;
     }
 
-     public function selectBy(array $filter){}
 
 
 public function selectSecondaireCompte($user_id): array {

@@ -155,7 +155,7 @@
                             
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Adresse</label>
-                                <input type="text" name="adresse" id="adresse" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors" readonly>
+                                <input type="text" name="adresse" id="adresse" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
                                 <?php if(!empty($_SESSION['errors']['adresse'])): ?>
                                     <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
                                         <p class="text-sm text-white"><?= $_SESSION['errors']['adresse']; ?></p>
@@ -165,11 +165,11 @@
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
-                                <input type="text" name="telephone" id="telephone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors" readonly>
+                                <input type="text" name="telephone" id="telephone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
                                 <?php if(!empty($_SESSION['errors']['telephone'])): ?>
                                     <div class="flex items-center mt-1 bg-red-400 justify-center px-4 py-2 rounded-md">
                                         <p class="text-sm text-white"><?= $_SESSION['errors']['telephone']; ?></p>
-                                    </div>
+                                    </div>comptePrincipal
                                 <?php endif; ?>
                             </div>
                             
@@ -186,7 +186,7 @@
         </div>
     </div>
 
-   <script>
+<script>
     document.getElementById('searchBtn').addEventListener('click', function () {
     const cni = document.getElementById('numeroCNI').value.trim();
 

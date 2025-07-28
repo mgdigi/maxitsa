@@ -47,7 +47,6 @@ class CompteController extends AbstractController{
             'comptes' => $comptes, ]);
      }
      public function create(){
-    //    $citoyens = $this->fetchAPI('https://appdafapi.onrender.com/api/citoyens');
         $this->layout = 'security';
         $this->render('compte/form.principal.php');
      }

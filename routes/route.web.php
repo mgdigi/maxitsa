@@ -89,19 +89,21 @@ $routes = [
     'method' => 'annuler',
     'middlewares' => ['auth']
 ],
-
-// ],
-// '/search-transactions' => [
-//     'controller' => TransactionController::class,
-//     'method' => 'search',
-//     'middlewares' => ['auth']
-// ],
-
-// '/search-transactions-ajax' => [
-//     'controller' => TransactionController::class,
-//     'method' => 'searchAjax',
-//     'middlewares' => ['auth']
-// ],
+'/woyofal' => [
+  'controller' => TransactionController::class,
+  'method' => 'woyofalForm',
+  'middlewares' => ['auth']
+],
+'/valider-achat' => [
+  'controller' => TransactionController::class,
+  'method' => 'achatWoyofal',
+  'middlewares' => ['auth']
+],
+'/recu-woyofal' => [
+    'controller' => TransactionController::class,
+    'method' => 'showReceipt',
+    'middlewares' => ['auth']
+]
 
 
 ];

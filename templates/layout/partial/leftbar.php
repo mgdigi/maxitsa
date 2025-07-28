@@ -27,11 +27,21 @@
                 <div class="mb-3 bg-white rounded-full">
                     <a href="/transactionForm">
                     <div class="flex items-center px-4 py-3 bg-white rounded-full justify-center gap-2">
-                         <img src="./assets/icons/compte.svg" alt="">
-                        <span class="text-sm">faire une transaction</span>
+                         <img src="./assets/icons/depot.svg" alt="">
+                        <span class="text-sm">faire un depot </span>
                     </div>
                     </a>
                 </div>
+                <div class="mb-3 bg-white rounded-full">
+                    <a href="/woyofal">
+                    <div class="flex items-center px-4 py-3 bg-white rounded-full justify-center gap-2">
+                         <img class="w-8 h-8" src="./assets/icons/woyofalpayment.svg" alt="">
+                        <span class="text-sm">enregistrer paiement</span>
+                    </div>
+                    </a>
+                </div>
+
+                
             </nav>
             
             <div class="p-4">
