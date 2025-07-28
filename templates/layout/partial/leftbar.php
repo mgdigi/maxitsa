@@ -45,7 +45,7 @@
             </nav>
             
             <div class="p-4">
-                <a href="logout">
+                <a href="/logout">
                 <button class="w-full bg-orange-maxit text-white rounded-2xl py-4 font-medium hover:bg-orange-600 transition-colors flex items-center justify-center">
                     <img src="./assets/icons/logout.svg" alt="logout" class="w-5 h-5 mr-2">
                 </button>
