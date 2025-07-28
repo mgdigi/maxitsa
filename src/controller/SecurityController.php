@@ -60,11 +60,9 @@ class SecurityController extends AbstractController{
          }else{
             $this->validator->addError('password', "Identifiant incorrect");
             $this->session->set('errors', $this->validator->getErrors());
-            echo  ("i m here");
             $this->render("login/login.php");
          }
         }else{
-            echo ('mauvaise donne');
             $this->session->set('errors', $this->validator->getErrors());
             $this->render("login/login.php");
         }
