@@ -72,7 +72,7 @@ class SecurityController extends AbstractController{
 
     public function logout(){
         session_destroy();
-        header("Location:". APP_URL);
+        header("Location: /");
     }
 
       private function validateForm(array &$data): array {
