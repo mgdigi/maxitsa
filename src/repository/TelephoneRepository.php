@@ -31,8 +31,6 @@ class TelephoneRepository extends AbstractRepository{
         $this->usersRepository = $usersRepository;
         $this->compteRepository = $compteRepository;
 
-        // $this->usersRepository = App::getDependency('usersRepo');
-        // $this->compteRepository = App::getDependency('compteRepo');
     }
 
     public function selectAll(){}
@@ -80,12 +78,10 @@ class TelephoneRepository extends AbstractRepository{
             $stmt->execute(['numero' => $tel, 'user_id' => $user_id, 'compte_id' => $compte_id]);
             $comptePrincipal = $this->compteRepository->findPrincipalByUserId($user_id);
             $soldePrincipal = $comptePrincipal['solde'];
-            var_dump($comptePrincipal);
 
             if($solde > 0 && $solde < $soldePrincipal){
                 $newSolde = $soldePrincipal - $solde;
                 $this->compteRepository->updateSolde($comptePrincipal['compte_id'], $newSolde);
-                var_dump($soldePrincipal);
                 $this->pdo->commit();
                 return true;
             }else{

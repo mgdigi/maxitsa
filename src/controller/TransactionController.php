@@ -4,16 +4,18 @@ namespace App\Controller;
 
 use App\Core\App;
 use App\Core\Session;
+use App\Core\Validator;
 use App\Service\CompteService;
 use App\Service\TransactionService;
 use App\Core\Abstract\AbstractController;
 
 class TransactionController extends AbstractController{
 
+    private Validator $validator;
     private TransactionService $transactionService;
     private CompteService $compteService;
     public function __construct(
-
+        Validator $validator, 
         Session $session,
         TransactionService $transactionService,
         CompteService $compteService
@@ -22,7 +24,7 @@ class TransactionController extends AbstractController{
 
             $this->session = $session
         );
-    
+        $this->validator = $validator;
         $this->transactionService = $transactionService;
         $this->compteService = $compteService;
 
@@ -190,6 +192,195 @@ public function annuler() {
     
     header('Location: /listTransactions');
     exit;
+}
+
+
+    public function woyofalForm(){
+        $this->render('transaction/paiement.php');
+    }
+
+    public function achatWoyofal()
+    {
+        try {
+            $validation = $this->validateAchatData($_POST);
+            if (!$validation['valid']) {
+                $_SESSION['errors'] = $validation['errors'];
+                $this->redirect('/woyofal'); 
+                return;
+            }
+
+            $numeroCompteur = trim($_POST['numero_compteur']);
+            $montant = floatval($_POST['montant']);
+
+            $compteurInfo = $this->verifyCompteur($numeroCompteur);
+            if (!$compteurInfo['success']) {
+                $this->
+                $_SESSION['errors']['numero_compteur'] = $compteurInfo['message'];
+                $this->redirect('/woyofal');
+                return;
+            }
+
+            $achatResult = $this->processAchat($numeroCompteur, $montant);
+            if (!$achatResult['success']) {
+                $_SESSION['errors']['general'] = $achatResult['message'];
+                $this->redirect('/woyofal');
+                return;
+            }
+
+            
+
+            $this->generateReceipt($compteurInfo['data'], $achatResult['data']);
+
+        } catch (\Exception $e) {
+            $_SESSION['errors']['general'] = "Une erreur est survenue: " . $e->getMessage();
+            $this->redirect('/woyofal');
+        }
+    }
+
+
+private function validateAchatData($data)
+{
+    $errors = [];
+    
+    if (empty($data['numero_compteur'])) {
+        $errors['numero_compteur'] = 'Le numéro de compteur est obligatoire';
+    } elseif (strlen(trim($data['numero_compteur'])) < 5) {
+        $errors['numero_compteur'] = 'Le numéro de compteur doit contenir au moins 5 caractères';
+    }
+    
+    if (empty($data['montant']) || !is_numeric($data['montant'])) {
+        $errors['montant'] = 'Le montant est obligatoire et doit être numérique';
+    } elseif (floatval($data['montant']) <= 0) {
+        $errors['montant'] = 'Le montant doit être supérieur à 0';
+    } elseif (floatval($data['montant']) < 100) {
+        $errors['montant'] = 'Le montant minimum est de 100 FCFA';
+    }
+    
+    return [
+        'valid' => empty($errors),
+        'errors' => $errors
+    ];
+}
+
+
+private function verifyCompteur($numeroCompteur)
+{
+    $apiUrl = "https://appwoyofal-6cfi.onrender.com/api/achat/verifier/" . urlencode($numeroCompteur);
+    
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $apiUrl,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTPHEADER => [
+            'Content-Type: application/json',
+            'Accept: application/json'
+        ]
+    ]);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    
+    if (curl_error($ch)) {
+        curl_close($ch);
+        return [
+            'success' => false,
+            'message' => 'Erreur de connexion à l\'API: ' . curl_error($ch)
+        ];
+    }
+    
+    curl_close($ch);
+    
+    $data = json_decode($response, true);
+    
+    if ($httpCode !== 200 || !$data['success']) {
+        return [
+            'success' => false,
+            'message' => $data['message'] ?? 'Compteur non trouvé'
+        ];
+    }
+    
+    return [
+        'success' => true,
+        'data' => $data['data']['data'] 
+    ];
+}
+
+
+private function processAchat($numeroCompteur, $montant)
+{
+    $apiUrl = "https://appwoyofal-6cfi.onrender.com/api/achat";
+    
+    $postData = json_encode([
+        'numero_compteur' => $numeroCompteur,
+        'montant' => $montant
+    ]);
+    
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $apiUrl,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $postData,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTPHEADER => [
+            'Content-Type: application/json',
+            'Accept: application/json'
+        ]
+    ]);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    
+    if (curl_error($ch)) {
+        curl_close($ch);
+        return [
+            'success' => false,
+            'message' => 'Erreur de connexion à l\'API: ' . curl_error($ch)
+        ];
+    }
+    
+    curl_close($ch);
+    
+    $data = json_decode($response, true);
+    
+    if ($httpCode !== 200 || $data['statut'] !== 'Success') {
+        return [
+            'success' => false,
+            'message' => $data['message'] ?? 'Erreur lors de l\'enregistrement de l\'achat'
+        ];
+    }
+    
+    return [
+        'success' => true,
+        'data' => $data['data']
+    ];
+}
+
+
+private function generateReceipt($compteurInfo, $achatInfo)
+{
+    $receiptData = [
+        'client_nom' => $compteurInfo['client'],
+        'numero_compteur' => $compteurInfo['numero_compteur'],
+        'code_recharge' => $achatInfo['code'],
+        'nombre_kwh' => $achatInfo['nbreKwt'],
+        'date_heure' => $achatInfo['date'],
+        'tranche' => $achatInfo['tranche'],
+        'prix_unitaire' => $achatInfo['prix'],
+        'montant_paye' => $achatInfo['prix'] * $achatInfo['nbreKwt'],
+        'reference' => $achatInfo['reference']
+    ];
+    
+    $_SESSION['receipt'] = $receiptData;
+    $_SESSION['success'] = "Achat effectué avec succès!";
+    
+    $this->redirect('/recu-woyofal');
+}
+
+public function showReceipt()
+{
+    $this->render('transaction/recu.woyofal.php');
 }
 
 

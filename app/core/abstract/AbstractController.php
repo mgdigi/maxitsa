@@ -44,6 +44,12 @@ abstract class AbstractController extends Session{
         require_once '../templates/layout/'. $this->layout . '.layout.php';
     }
 
+    public function redirect($url)
+        {
+            header("Location: " . APP_URL . $url);
+            exit;
+        }
+
     public function uploadPhotos(array $files): string|false {
     try {
         $uploads = ImageService::uploadMultipleImages([

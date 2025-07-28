@@ -22,8 +22,6 @@ class TransactionRepository extends AbstractRepository{
         parent::__construct();
         $this->compteRepository = $compteRepository;
         $this->telephoneRepository = $telephoneRepository;
-        // $this->compteRepository = App::getDependency('compteRepo');
-        // $this->telephoneRepository = App::getDependency('telephoneRepo');
     }
 
     public static function getInstance():TransactionRepository{
@@ -89,7 +87,6 @@ private function verifierContraintesDepot($compteExpediteurId, $compteDestinatai
 
 
  public function depotEntreComptes($compteExpediteurId, $compteDestinataireId, $montant, $libelle = 'Dépôt entre comptes') {
-    error_log("Début depotEntreComptes - Exp: $compteExpediteurId, Dest: $compteDestinataireId, Montant: $montant");
     
     $this->pdo->beginTransaction();
     
@@ -170,6 +167,8 @@ private function verifierContraintesDepot($compteExpediteurId, $compteDestinatai
     }
 }
 
+
+
 private function calculerFraisTransfert($typeExpediteur, $typeDestinataire, $montant): float {
     if ($typeExpediteur === 'principal' && $typeDestinataire === 'principal') {
         $frais = $montant * 0.08; 
@@ -219,19 +218,16 @@ public function annulerTransaction($transactionId, $userId): bool {
     $this->pdo->beginTransaction();
     
     try {
-        // Récupérer la transaction à annuler
         $transaction = $this->getTransactionForCancellation($transactionId, $userId);
         
         if (!$transaction) {
             throw new \Exception("Transaction non trouvée ou non autorisée");
         }
         
-        // Vérifier si la transaction peut être annulée
         if (!$this->peutEtreAnnulee($transaction)) {
             throw new \Exception("Cette transaction ne peut pas être annulée");
         }
         
-        // Simplement marquer comme annulée
         $this->marquerCommeAnnulee($transactionId);
         
         $this->pdo->commit();
@@ -255,17 +251,14 @@ public function getTransactionForCancellation($transactionId, $userId): ?array {
 }
 
 private function peutEtreAnnulee($transaction): bool {
-    // Vérifier si c'est un dépôt
     if (!in_array($transaction['typetransaction'], ['depot', 'depot_entrant', 'depot_sortant'])) {
         return false;
     }
     
-    // Vérifier si le status permet l'annulation
     if ($transaction['status'] === true || $transaction['status'] === 't' || $transaction['status'] === 'annulee') {
         return false;
     }
     
-    // Vérifier si la transaction n'est pas trop ancienne (24h)
     $dateTransaction = new \DateTime($transaction['datetransaction']);
     $maintenant = new \DateTime();
     $diff = $maintenant->diff($dateTransaction);
@@ -281,6 +274,10 @@ private function marquerCommeAnnulee($transactionId): bool {
     $query = "UPDATE {$this->table} SET status = 'annulee' WHERE id = :id";
     $stmt = $this->pdo->prepare($query);
     return $stmt->execute(['id' => $transactionId]);
+}
+
+public function enregistrerPaiement(){
+    
 }
 
 

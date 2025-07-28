@@ -31,6 +31,14 @@ $rules = [
     'numeroCNI' => [
         ['required',ErreurMessage::REQUIRED->value],
         ['isCNI', ErreurMessage::IS_CNI->value],
+    ],
+    'numero_compteur' => [
+        ['required', ErreurMessage::REQUIRED->value],
+
+    ],
+    'montant' => [
+        ['required', ErreurMessage::REQUIRED->value]
     ]
+
 
 ];

@@ -56,7 +56,6 @@ class UsersRepository extends AbstractRepository{
     $stmt = $this->pdo->prepare($query);
     $stmt->execute(['login' => $login]);
     $result = $stmt->fetch();
-    // var_dump(User::toObject($result));  
     return $result ? User::toObject($result) : null;
 }
 
