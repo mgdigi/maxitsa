@@ -1,5 +1,5 @@
 {
-    "name": "mgdigi/ges-employer",
+    "name": "mgdigi/maxit-sa",
     "autoload": {
         "psr-4": {
             "App\\Entity\\": "src/entity/",
